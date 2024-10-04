@@ -1,10 +1,9 @@
-import initialize_account as init
+import user_dashboard as dashboard
 
 
 def main():
     print("Welcome to Personal Finance Manager")
-    init.initialize_account_chart()
-    
+    dashboard.display_dashboard()
     
 if __name__ == '__main__':
     main()
