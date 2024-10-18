@@ -7,18 +7,21 @@ Type ".tables" to see the Accounts table
 """
 import sqlite3
 
-connection = sqlite3.connect("personal_finance.db")
+connection = sqlite3.connect("personal_finance.csv")
 
 cursor = connection.cursor()
 
-# SQL command to create a table in the database
-sql_command = """CREATE TABLE Accounts (
-account_id INTEGER PRIMARY KEY, 
-name VARCHAR(64), 
-category VARCHAR(16), 
-amount FLOAT
-);"""
+def create_account_table():
+    # SQL command to create a table in the database
+    sql_command = """CREATE TABLE Accounts (
+    account_id INTEGER PRIMARY KEY, 
+    name VARCHAR(64), 
+    category VARCHAR(16), 
+    amount FLOAT
+    );"""
+    
+    cursor.execute(sql_command)
 
-cursor.execute(sql_command)
+
 
 connection.close()
