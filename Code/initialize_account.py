@@ -14,6 +14,6 @@ def use_template():
     
 def upload_template():
     filename = input("Enter the name of the file you want to use: ")
-    open(filename, "r")
+    f = open(filename, "r")
     
     
