@@ -1,4 +1,5 @@
 import initialize_account as init_acc
+import budget_report as br
 
 
 def display_dashboard():
@@ -19,7 +20,7 @@ def display_dashboard():
             elif choice == 3:
                 pass
             elif choice == 4:
-                pass
+                br.create_budget_report()
             elif choice == 5:
                 break
             else:
