@@ -8,7 +8,7 @@ def delete_account():
     account_id = input("Enter account ID: ")
 
     # Connect to the SQLite database
-    connection = sqlite3.connect('account_database.db')
+    connection = sqlite3.connect('personal_finance.db')
     cursor = connection.cursor()
 
     # Check if the account ID exists

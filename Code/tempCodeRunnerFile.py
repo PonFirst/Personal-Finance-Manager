@@ -8,7 +8,7 @@ def create_account_table():
         account_id INTEGER PRIMARY KEY,
         name VARCHAR(64) NOT NULL,
         category VARCHAR(16) NOT NULL,
-        balance FLOAT NOT NULL
+        amount FLOAT NOT NULL
     );"""
     cursor.execute(sql_command)
     connection.commit()

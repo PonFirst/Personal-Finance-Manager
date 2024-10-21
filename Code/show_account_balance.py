@@ -6,7 +6,7 @@ import sqlite3
 
 def connect_db():
     # Connect to the SQLite database
-    return sqlite3.connect('account_database.db')
+    return sqlite3.connect('personal_finance.db')
 
 def display_all_accounts(conn):
     # Display all account balances.

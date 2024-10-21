@@ -7,50 +7,71 @@ Add Account Create a new account that contains
 
 import sqlite3
 from account import Account
+from tempCodeRunnerFile import create_account_table
 
-# Initialize the database function
-def initialize_database():
+
+# Note the validation functions are defined here but I will move them to a separate file in the next step
+# Validate account type
+def validate_account_type(account_type):
+    valid_types = ["Income", "Expense", "Asset", "Liability"]
+    account_type = account_type.title() # allow lowercase input
+    if account_type not in valid_types:
+        raise ValueError("Invalid account type.")
+
+# Validate account name
+def validate_account_name(account_name):
+    if not account_name:
+        raise ValueError("Account name cannot be empty.")
     
-    connection = sqlite3.connect('account_database.db')
+# Validate account ID uniqueness
+def account_unique_id(account_id):
+    connection = sqlite3.connect('personal_finance.db')
     cursor = connection.cursor()
-    
-    # Create the accounts table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS accounts (
-            account_id TEXT PRIMARY KEY,
-            name TEXT NOT NULL,
-            category TEXT NOT NULL,
-            amount DECIMAL(10,2) NOT NULL,
-            created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
-    
-    connection.commit()
+    cursor.execute('SELECT account_id FROM accounts WHERE account_id = ?', (account_id,))
+    account = cursor.fetchone()
     connection.close()
+    return account is None
 
-# add account function
-def add_account():
-    
+# Validate account ID
+def validate_account_id(account_id):
+    if not account_id:
+        raise ValueError("Account ID cannot be empty.")
+    if not account_id.isdigit():
+        raise ValueError("Account ID must be a number.")
+    if not account_unique_id(account_id):
+        raise ValueError("Account ID already exists.")
+
+# Validate amount
+def validate_amount(amount):
     try:
-        # Get account type
+        amount = float(amount)
+    except ValueError:
+        raise ValueError("Amount must be a number.")
+    return amount
+
+
+# Add account function
+def add_account():
+    try:
+
         account_type = str(input("Enter account type (Income, Expense, Asset, Liability): "))
+        validate_account_type(account_type)
         
-        # Get account name
         account_name = str(input("Enter account name: "))
+        validate_account_name(account_name)
         
-        # Get account ID
         account_id = str(input("Enter account ID: "))
+        validate_account_id(account_id)
         
-        # Get amount of money
-        amount = float(input("Enter amount of money: "))
+        amount = input("Enter amount of money: ")
+        amount = validate_amount(amount)
         
         # Create an Account instance to validate the data
         account = Account(account_id, account_name, account_type, amount)
         
-        # Connect to the database and insert the account
-        connection = sqlite3.connect('account_database.db')
+        # Connect to the database and add(insert) the account
+        connection = sqlite3.connect('personal_finance.db')
         cursor = connection.cursor()
-        
         cursor.execute('''
             INSERT INTO accounts (account_id, name, category, amount)
             VALUES (?, ?, ?, ?)
@@ -61,50 +82,14 @@ def add_account():
         
         print("Account has been added")
         
-    except ValueError as e:
-        print(f"Error: {e}")
-    except sqlite3.IntegrityError:
-        print("Error: Account ID already exists.")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
 def main():
-    # Initialize the database 
-    initialize_database()
+    # Initialize the database table
+    create_account_table()
     # Add account
     add_account()
 
 if __name__ == "__main__":
     main()
-
-
-
-# Add account to the account database (csv file)
-"""import os
-import csv
-
-def add_account():
-    
-    account_type = input("Enter account type(Income, Expense, Asset, Liability): ") 
-    
-    account_name = input("Enter account name: ")
-   
-    account_id = input("Enter account ID: ")
-  
-    amount = input("Enter amount of money: ")
-    
-    # Open the csv file to write
-    with open("account_database.csv", "a", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow([account_type, account_name, account_id, amount])
-        
-    print("Account has been added")
-
-
-
-def main():
-    add_account()
-
-
-if __name__ == "__main__":
-    main()"""
