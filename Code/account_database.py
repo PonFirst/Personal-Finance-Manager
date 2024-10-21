@@ -11,6 +11,8 @@ def create_account_table():
         balance FLOAT NOT NULL
     );"""
     cursor.execute(sql_command)
+    connection.commit()
+    connection.close()
 
 # Create Transactions table
 def create_transactions_table():
@@ -27,6 +29,8 @@ def create_transactions_table():
         FOREIGN KEY (destination_account_id) REFERENCES Accounts(account_id)
     );"""
     cursor.execute(sql_command)
+    connection.commit()
+    connection.close()
     
 # Create Budget table
 def create_budget_table():
@@ -38,5 +42,16 @@ def create_budget_table():
         budgeted_amount FLOAT NOT NULL
     );"""
     cursor.execute(sql_command)
+    connection.commit()
+    connection.close()
+    
+# Insert account
+def insert_account(account):
+    connection = sqlite3.connect("personal_finance.db")
+    cursor = connection.cursor()
+    
+    sql_command = """INSERT INTO Accounts (account_id, name, category, balance) VALUES (?, ?, ?, ?);"""
+    
+    cursor.execute(sql_command, (account.account_id, account.name, account.category, account.amount))
     connection.commit()
     connection.close()

@@ -36,7 +36,7 @@ def initialize_account_chart():
     try:
         choice = int(input("Choose a option: "))
         if choice == 1:
-            init_acc.use_template()
+            init_acc.use_template("Finance Template.csv")
         elif choice == 2:
             init_acc.upload_template()
         else:
