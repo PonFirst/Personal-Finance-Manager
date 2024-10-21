@@ -11,11 +11,11 @@ class Account:
     """
     VALID_CATEGORIES = ('Income', 'Expense', 'Asset', 'Liability')
     
-    def __init__(self, account_id, name, category, amount):
+    def __init__(self, account_id, name, category, balance):
         self.account_id = account_id
         self.name = name
         self.category = category
-        self.amount = amount
+        self.balance = balance
         
     
         

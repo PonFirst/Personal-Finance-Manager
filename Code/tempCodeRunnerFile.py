@@ -52,10 +52,6 @@ def insert_account(account):
     
     sql_command = """INSERT INTO Accounts (account_id, name, category, balance) VALUES (?, ?, ?, ?);"""
     
-    try:
-        cursor.execute(sql_command, (account.account_id, account.name, account.category, account.balance))
-        connection.commit()
-    except sqlite3.IntegrityError:
-        print(f"Account ID {account.account_id} already exists. Skipping this entry.")
-    finally:
-        connection.close()
+    cursor.execute(sql_command, (account.account_id, account.name, account.category, account.amount))
+    connection.commit()
+    connection.close()
