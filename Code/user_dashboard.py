@@ -1,5 +1,5 @@
 import initialize_account as init_acc
-import budget_report as br
+import budget_management as br
 
 
 def display_dashboard():
@@ -20,7 +20,7 @@ def display_dashboard():
             elif choice == 3:
                 pass
             elif choice == 4:
-                br.create_budget_report()
+                budget_interface()
             elif choice == 5:
                 break
             else:
@@ -39,6 +39,25 @@ def initialize_account_chart():
             init_acc.use_template("Finance Template.csv")
         elif choice == 2:
             init_acc.upload_template()
+        else:
+            print("Invalid Choice!")
+    except ValueError:
+        print("Invalid Choice!")
+
+
+def budget_interface():
+    print("1. Add Budget")
+    print("2. Modify Budget")
+    print("3. View Budget Report")
+    
+    try:
+        choice = int(input("Choose a option: "))
+        if choice == 1:
+            br.add_budget()
+        elif choice == 2:
+            pass
+        elif choice == 3:
+            br.create_budget_report()
         else:
             print("Invalid Choice!")
     except ValueError:
