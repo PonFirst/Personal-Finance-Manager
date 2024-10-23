@@ -72,7 +72,6 @@ def add_transaction():
     elif confirmation == 'Y':
         print("Transaction confirmed.")
     else: 
-        print("Invalid input. Transaction cancelled.")
         return
     
     
