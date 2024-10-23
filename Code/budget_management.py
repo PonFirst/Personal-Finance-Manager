@@ -25,7 +25,55 @@ def add_budget():
     connection.close()
     
     
-
+def modify_budget():
+    connection = sqlite3.connect("personal_finance.db")
+    cursor = connection.cursor()
+    
+    category = input("Enter the category for your budget you want to modify: ")
+        
+    cursor.execute("SELECT budgeted_amount FROM Budgets WHERE category = ?", (category,))
+    existing_budget = cursor.fetchone()
+    
+    if existing_budget:
+        print(f"Current budget for '{category}' is {existing_budget[0]:.2f}.")
+        amount = float(input("Enter the amount of your budget: "))
+        
+        cursor.execute('''
+            UPDATE Budgets
+            SET budgeted_amount = ?
+            WHERE category = ?
+        ''', (amount, category))
+        print(f"Budget for '{category}' has been updated to {amount:.2f}.")
+    else:
+        print(f"Budget category '{category}' doesn't exists!")
+        
+    connection.commit()
+    connection.close()
+    
+    
+def delete_budget():
+    connection = sqlite3.connect("personal_finance.db")
+    cursor = connection.cursor()
+    
+    category = input("Enter the category for your budget you want to delete: ")
+        
+    cursor.execute("SELECT budgeted_amount FROM Budgets WHERE category = ?", (category,))
+    existing_budget = cursor.fetchone()
+    
+    if existing_budget:
+        print(f"Current budget for '{category}' is {existing_budget[0]:.2f}.")
+        confirm = input("Confirm you want to delete (y/n)").lower()
+        
+        if confirm == "y":
+            cursor.execute("DELETE FROM Budgets WHERE category = ?", (category,))
+            print(f"Budget for '{category}' has been deleted.")
+        else:
+            print("Budget deletion have been cancelled.")
+    else:
+        print(f"Budget category '{category}' doesn't exists!")
+        
+    connection.commit()
+    connection.close()
 
 
 def create_budget_report():

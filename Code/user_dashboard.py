@@ -48,15 +48,18 @@ def initialize_account_chart():
 def budget_interface():
     print("1. Add Budget")
     print("2. Modify Budget")
-    print("3. View Budget Report")
+    print("3. Delete Budget")
+    print("4. View Budget Report")
     
     try:
         choice = int(input("Choose a option: "))
         if choice == 1:
             br.add_budget()
         elif choice == 2:
-            pass
+            br.modify_budget()
         elif choice == 3:
+            br.delete_budget()
+        elif choice == 4:
             br.create_budget_report()
         else:
             print("Invalid Choice!")
