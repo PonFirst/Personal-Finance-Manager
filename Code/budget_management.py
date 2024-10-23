@@ -1,68 +1,128 @@
 import sqlite3
-from account import Account
 
 
+# Prompt the user to enter a valid category name.
+def get_valid_category(prompt):
+    while True:
+        new_category = input(prompt).strip()
+        if not new_category:
+            print("Invalid budget name! Please enter a non-empty category name.")
+        else:
+            return new_category
+        
+# Add budget
 def add_budget():
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
     
-    category = input("Enter the category for your budget: ")
-    
-    amount = float(input("Enter the amount of your budget: "))
+    while True:
+        category = get_valid_category("Enter the category for your budget: ")
         
-    cursor.execute("SELECT budgeted_amount FROM Budgets WHERE category = ?", (category,))
-    existing_budget = cursor.fetchone()
-    
-    if existing_budget:
-        print(f"Budget category '{category}' already exists with amount: {existing_budget[0]:.2f}. Skipping creation.")
-    else:
-        cursor.execute('''
-            INSERT INTO Budgets (category, budgeted_amount) VALUES (?, ?)
-        ''', (category, amount))
-        print(f"Budget for '{category}' added with amount: {amount:.2f}.")
+        # Check for blank category name
+        if not category:
+            print("Invalid budget name!")
+            continue 
+        
+        try:
+            amount = float(input("Enter the amount of your budget: "))
+        except ValueError:
+            print("Invalid budget amount!")
+            continue
+
+        # Check for negative budget amount
+        if amount < 0:
+            print("Invalid budget amount!")
+            continue
+        
+        cursor.execute("SELECT budgeted_amount FROM Budgets WHERE category = ?", (category,))
+        existing_budget = cursor.fetchone()
+        
+        if existing_budget:
+            print(f"Budget name '{category}' already exists with amount: {existing_budget[0]:.2f}. Skipping creation.")
+            break
+        else:
+            cursor.execute('''
+                INSERT INTO Budgets (category, budgeted_amount) VALUES (?, ?)
+            ''', (category, amount))
+            print(f"Budget for '{category}' added with amount: {amount:.2f}.")
+            break 
     
     connection.commit()
     connection.close()
+
     
     
+    
+
+# Modify an existing budget category and/or its amount.
 def modify_budget():
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
     
-    category = input("Enter the category for your budget you want to modify: ")
-        
+    category = get_valid_category("Enter the category for your budget you want to modify: ")
+    
+    # Check if the budget category exists
     cursor.execute("SELECT budgeted_amount FROM Budgets WHERE category = ?", (category,))
     existing_budget = cursor.fetchone()
     
     if existing_budget:
         print(f"Current budget for '{category}' is {existing_budget[0]:.2f}.")
-        amount = float(input("Enter the amount of your budget: "))
         
-        cursor.execute('''
-            UPDATE Budgets
-            SET budgeted_amount = ?
-            WHERE category = ?
-        ''', (amount, category))
-        print(f"Budget for '{category}' has been updated to {amount:.2f}.")
+        # Ask the user if they want to modify the category name
+        modify_name = input("Do you want to modify the category name? (y/n): ").lower()
+        new_category = category
+        
+        if modify_name == "y":
+            new_category = get_valid_category("Enter the new category name: ")
+        
+        # Ask the user to modify the budget amount
+        modify_amount = input("Do you want to modify the budget amount? (y/n): ").lower()
+        
+        if modify_amount == "y":
+            while True:
+                try:
+                    amount = float(input("Enter the new amount of your budget: "))
+                    if amount < 0:
+                        print("Invalid budget amount!")
+                        continue
+                    break
+                except ValueError:
+                    print("Invalid budget amount!")
+
+            cursor.execute('''
+                UPDATE Budgets
+                SET budgeted_amount = ?
+                WHERE category = ?
+            ''', (amount, category))
+            print(f"Budget for '{category}' has been updated to {amount:.2f}.")
+            
+        if modify_name == "y" and new_category != category:
+            cursor.execute('''
+                UPDATE Budgets
+                SET category = ?
+                WHERE category = ?
+            ''', (new_category, category))
+            print(f"Budget category has been changed from '{category}' to '{new_category}'.")
+        
     else:
-        print(f"Budget category '{category}' doesn't exists!")
+        print(f"Budget category '{category}' doesn't exist!")
         
     connection.commit()
     connection.close()
     
-    
+# Delete budget
 def delete_budget():
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
     
-    category = input("Enter the category for your budget you want to delete: ")
+    category = get_valid_category("Enter the category for your budget you want to delete: ")
         
     cursor.execute("SELECT budgeted_amount FROM Budgets WHERE category = ?", (category,))
     existing_budget = cursor.fetchone()
     
     if existing_budget:
         print(f"Current budget for '{category}' is {existing_budget[0]:.2f}.")
-        confirm = input("Confirm you want to delete (y/n)").lower()
+        confirm = input("Confirm you want to delete (y/n): ").lower()
         
         if confirm == "y":
             cursor.execute("DELETE FROM Budgets WHERE category = ?", (category,))
@@ -75,7 +135,7 @@ def delete_budget():
     connection.commit()
     connection.close()
 
-
+# Create Budget report
 def create_budget_report():
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
@@ -87,22 +147,6 @@ def create_budget_report():
             budgeted_amount FLOAT NOT NULL
         );
     ''')
-
-    sample_budgets = [
-        ("Groceries", 300.00),
-        ("Rent", 1200.00),
-        ("Utilities", 200.00),
-        ("Transportation", 150.00),
-        ("Entertainment", 100.00),
-        ("Savings", 500.00),
-    ]
-
-    for category, budgeted_amount in sample_budgets:
-        cursor.execute("SELECT COUNT(*) FROM Budgets WHERE category = ?", (category,))
-        if cursor.fetchone()[0] == 0:
-            cursor.execute('''
-                INSERT INTO Budgets (category, budgeted_amount) VALUES (?, ?)
-            ''', (category, budgeted_amount))
     
     cursor.execute("SELECT category, budgeted_amount FROM Budgets")
     budgets = cursor.fetchall()
