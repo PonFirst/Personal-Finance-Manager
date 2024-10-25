@@ -66,6 +66,7 @@ def account_management():
         print("Invalid Choice!")
 
 
+
 def budget_interface():
     print("1. Add Budget")
     print("2. Modify Budget")

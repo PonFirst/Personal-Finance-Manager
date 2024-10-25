@@ -102,7 +102,9 @@ def modify_budget():
                 WHERE category = ?
             ''', (amount, category))
             print(f"Budget for '{category}' has been updated to {amount:.2f}.")
-            
+        else:
+            if (modify_amount != "n"):
+                print("Invalid confirmation! Please enter y or n")    
         if modify_name == "y" and new_category != category:
             cursor.execute('''
                 UPDATE Budgets
