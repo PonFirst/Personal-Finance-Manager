@@ -1,5 +1,8 @@
 import initialize_account as init_acc
 import budget_management as br
+import add_account
+import delete_account
+import show_account_balance
 
 
 def display_dashboard():
@@ -16,7 +19,7 @@ def display_dashboard():
             if choice == 1:
                 initialize_account_chart()
             elif choice == 2:
-                pass
+                account_management()
             elif choice == 3:
                 pass
             elif choice == 4:
@@ -39,6 +42,24 @@ def initialize_account_chart():
             init_acc.use_template("Finance Template.csv")
         elif choice == 2:
             init_acc.upload_template()
+        else:
+            print("Invalid Choice!")
+    except ValueError:
+        print("Invalid Choice!")
+
+def account_management():
+    print("1. Add account")
+    print("2. Delete account")
+    print("3. Show account balance")
+    
+    try:
+        choice = int(input("Choose a option: "))
+        if choice == 1:
+            add_account.add_account()
+        elif choice == 2:
+            delete_account.delete_account()
+        elif choice == 3:
+            show_account_balance.main()
         else:
             print("Invalid Choice!")
     except ValueError:
