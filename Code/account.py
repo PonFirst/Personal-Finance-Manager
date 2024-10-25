@@ -1,3 +1,4 @@
+
 class Account:
     """
     This class represents a account. It contains an ID, name, category, and account balance.
@@ -17,6 +18,7 @@ class Account:
         self.category = category
         self.balance = balance
         
+
     
         
     
