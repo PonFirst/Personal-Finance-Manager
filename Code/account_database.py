@@ -44,7 +44,7 @@ def create_budget_table():
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
-    
+
 # Insert account
 def insert_account(account):
     connection = sqlite3.connect("personal_finance.db")

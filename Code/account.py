@@ -6,7 +6,7 @@ class Account:
         account_id (str): The unique identifier for the account.
         name (str): The name of the account.
         category (str): The type of account (Income, Expense, Asset, Liability).
-        balance (float): The current balance of money inside the account.
+        amount (float): The current amount of money inside the account.
     
     """
     VALID_CATEGORIES = ('Income', 'Expense', 'Asset', 'Liability')
