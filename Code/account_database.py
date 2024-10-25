@@ -36,14 +36,21 @@ def create_transactions_table():
 def create_budget_table():
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
-    sql_command = """CREATE TABLE IF NOT EXISTS Budgets (
-        budget_id INTEGER PRIMARY KEY,
-        category VARCHAR(64) NOT NULL,
-        budgeted_amount FLOAT NOT NULL
-    );"""
-    cursor.execute(sql_command)
+
+    # Create Budgets table if it doesn't exist
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Budgets (
+            budget_id INTEGER PRIMARY KEY,
+            category VARCHAR(64) NOT NULL,
+            budgeted_amount FLOAT NOT NULL,
+            account_id INTEGER,
+            FOREIGN KEY (account_id) REFERENCES Accounts(account_id)
+        );
+    ''')
+
     connection.commit()
     connection.close()
+
 
 # Insert account
 def insert_account(account):

@@ -1,5 +1,5 @@
 import initialize_account as init_acc
-import budget_management as br
+from budget_management import Budget
 import add_account
 import delete_account
 import show_account_balance
@@ -72,17 +72,17 @@ def budget_interface():
     print("2. Modify Budget")
     print("3. Delete Budget")
     print("4. View Budget Report")
-    
+    budget = Budget()
     try:
         choice = int(input("Choose a option: "))
         if choice == 1:
-            br.add_budget()
+            budget.add_budget()
         elif choice == 2:
-            br.modify_budget()
+            budget.modify_budget()
         elif choice == 3:
-            br.delete_budget()
+            budget.delete_budget()
         elif choice == 4:
-            br.create_budget_report()
+            budget.create_budget_report()
         else:
             print("Invalid Choice!")
     except ValueError:
