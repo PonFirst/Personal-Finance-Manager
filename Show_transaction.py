@@ -26,5 +26,4 @@ def show_transactions(file_path):
 
 # Main function to run the script
 if __name__ == "__main__": # This is to run the script
-    file_path = '/Users/kasidith/Desktop/CMKL/SE/transactions.csv' # Change this to the path to trannsactions.csv
     show_transactions(file_path)
