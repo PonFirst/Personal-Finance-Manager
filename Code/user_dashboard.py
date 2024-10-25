@@ -24,9 +24,9 @@ def display_dashboard():
             elif choice == 5:
                 break
             else:
-                print("Invalid Choice!")
+                print("Invalid Choice!\n")
         except ValueError:
-            print("Invalid Choice!")
+            print("Invalid Choice!\n")
             
             
 def initialize_account_chart():

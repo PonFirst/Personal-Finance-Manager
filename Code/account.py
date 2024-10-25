@@ -5,7 +5,7 @@ class Account:
     Attributes:
         account_id (str): The unique identifier for the account.
         name (str): The name of the account.
-        category (str): The type of account (Income, Expense, Asset, Liability).
+        category (str): The typAe of account (Income, Expense, Asset, Liability).
         balance (float): The current amount of money inside the account.
     
     """

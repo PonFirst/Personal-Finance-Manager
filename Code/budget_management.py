@@ -1,4 +1,12 @@
-import sqlite3
+"""
+    This module is responsible for budget-related functionalities such as add, delete,
+    modify budgets, and print budget report.
+    
+    Created by Pon (First) Yimcharoen
+"""
+
+
+import sqlite3 # Use for modifying the database with sql
 
 
 # Prompt the user to enter a valid category name.
@@ -9,6 +17,7 @@ def get_valid_category(prompt):
             print("Invalid budget name! Please enter a non-empty category name.")
         else:
             return new_category
+        
         
 # Add budget
 def add_budget():
@@ -47,11 +56,9 @@ def add_budget():
             print(f"Budget for '{category}' added with amount: {amount:.2f}.")
             break 
     
+    print("")
     connection.commit()
     connection.close()
-
-    
-    
     
 
 # Modify an existing budget category and/or its amount.
@@ -107,6 +114,7 @@ def modify_budget():
     else:
         print(f"Budget category '{category}' doesn't exist!")
         
+    print("")
     connection.commit()
     connection.close()
     
@@ -132,6 +140,7 @@ def delete_budget():
     else:
         print(f"Budget category '{category}' doesn't exists!")
         
+    print("")
     connection.commit()
     connection.close()
 
@@ -156,5 +165,6 @@ def create_budget_report():
         category, budgeted_amount = budget
         print(f"{category:<20} {budgeted_amount:<10.2f}")
     
+    print("")
     connection.commit()
     connection.close()
