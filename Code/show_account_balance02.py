@@ -1,7 +1,7 @@
 """show_account_balance02.py 
 Program to show the account balance that lets the user choose 
 to display all accounts or a selected account, which is kept in the personal_finance.db database.
-version 2."""
+version 2"""
 
 import sqlite3
 

@@ -7,7 +7,7 @@ For example : Income account will have ID starting with 1, the account ID is 100
 if there are more this type of account the next account ID will be 1002 and so on
 The program will validate the account type, account name, account ID, and account balance. 
 If the data is valid, the program will add the account to the database. 
-If the data is invalid, the program will raise an error message and ask user to reinput data. 
+If the data is invalid, the program will raise an error message and ask user to reinput data
 """
 
 import sqlite3

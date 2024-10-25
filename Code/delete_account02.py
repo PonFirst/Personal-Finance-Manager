@@ -1,4 +1,4 @@
-# Delete account from the account database
+# Delete account from the account database version 2
 
 import sqlite3
 
