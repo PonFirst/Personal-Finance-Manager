@@ -1,65 +1,138 @@
+'''
+This code is a function that ask for transaction details and add it to the database.
+The element include - bank number, amount, description and date(and time)
+'''
+
 import datetime
-import csv
+import sqlite3
 
-# Function to validate bank number
-def validate_bank_number(bank_number):
-    return bank_number.isdigit() and len(bank_number) == 4  # assuming 4 digits
+def valid_bank_num(bank_number):        # Function to validate bank number
+    return bank_number.isdigit() and len(bank_number) == 4
 
-# Function to validate the amount
-def validate_amount(amount):
+def valid_amount(amount):       # Function to validate amount
     try:
         amount = float(amount)
         return amount > 0
     except ValueError:
         return False
 
-# Function to validate date and time input
-def validate_date(date_str):
+def valid_date(date_str):       # Function to validate date
     try:
         datetime.datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
         return True
     except ValueError:
         return False
 
-# Function to add transaction to the record
+def check_column():     # Function to check if the column exist in the database
+    conn = sqlite3.connect('personal_finance.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS transactions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            bank_number TEXT,
+            amount REAL,
+            description TEXT,
+            date TEXT
+        )
+    ''')
+    cursor.execute("PRAGMA table_info(transactions);")
+    columns = [column[1] for column in cursor.fetchall()]
+    if 'bank_number' not in columns:
+        cursor.execute("ALTER TABLE transactions ADD COLUMN bank_number TEXT;")
+        print("Added bank_number column to transactions table.")
+    conn.commit()
+    conn.close()
+    
+def remove_source_account_id(): # Function to remove source_account_id column
+    conn = sqlite3.connect('personal_finance.db')
+    cursor = conn.cursor()
+    
+    # Ensure the transactions table has the correct structure
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS transactions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            bank_number TEXT,
+            amount REAL,
+            description TEXT,
+            date TEXT
+        )
+    ''')
+    
+    # Check if the id column exists
+    cursor.execute("PRAGMA table_info(transactions);")
+    columns = [column[1] for column in cursor.fetchall()]
+    if 'id' not in columns:
+        # Create a new table with the correct structure
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS transactions_new (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                bank_number TEXT,
+                amount REAL,
+                description TEXT,
+                date TEXT
+            )
+        ''')
+        
+
+    # Copy data from the old table to the new table
+    cursor.execute('''
+        INSERT INTO transactions_new (bank_number, amount, description, date)
+        SELECT bank_number, amount, description, date
+        FROM transactions
+    ''')
+    
+    # Drop the old table
+    cursor.execute('DROP TABLE transactions')
+    
+    # Rename the new table to the original table name
+    cursor.execute('ALTER TABLE transactions_new RENAME TO transactions')
+    
+    conn.commit()
+    conn.close()
+
+'''
+Following code is to add transaction to the database
+Where it copy the data from the old table to the new table
+and then drop the old table and rename the new table to the original table name
+'''
+
+'''
+Following code is the main function
+'''
+
 def add_transaction():
-    # Ask for bank number
+
     while True:
         bank_number = input("Enter destination bank number (4 digits): ")
-        if validate_bank_number(bank_number):
+        if valid_bank_num(bank_number):
             break
         else:
             print("Invalid bank number. Please enter a 4-digit number.")
 
-    # Ask for transaction amount
     while True:
         amount = input("Enter the transaction amount: ")
-        if validate_amount(amount):
+        if valid_amount(amount):
             amount = float(amount)
             break
         else:
             print("Invalid amount. Please enter a positive number.")
 
-    # Ask for description
     description = input("Enter a description for the transaction: ")
 
-    # Ask for transaction date and time
     while True:
         transaction_date = input("Enter transaction date and time (format: YYYY-MM-DD HH:MM:SS): ")
-        if validate_date(transaction_date):
+        if valid_date(transaction_date):
             break
         else:
             print("Invalid date format. Please enter a valid date and time (YYYY-MM-DD HH:MM:SS).")
 
-    # Prepare transaction record
     transaction = {
         "bank_number": bank_number,
         "amount": amount,
         "description": description,
-        "date": transaction_date
+        "date": transaction_date,
     }
-    
-    # Confirm transaction details with user
+
     print("Want to record the following transaction? :")
     print(f"Bank number: {transaction['bank_number']}")
     print(f"Amount: {transaction['amount']}")
@@ -71,24 +144,26 @@ def add_transaction():
         return
     elif confirmation == 'Y':
         print("Transaction confirmed.")
-    else: 
-        print("Invalid input. Transaction cancelled. ")
-        return
-    
-    
-    # Append to a CSV file
-    with open('transactions.csv', 'a', newline='') as csvfile:
-        fieldnames = ['bank_number', 'amount', 'description', 'date']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        
-        # Write header only if the file is empty
-        if csvfile.tell() == 0:
-            writer.writeheader()
-        
-        writer.writerow(transaction)
-        
-        print("Transaction added successfully!")
-        print(transaction)
 
-# Call function to add transaction
+    conn = sqlite3.connect('personal_finance.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS transactions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            bank_number TEXT,
+            amount REAL,
+            description TEXT,
+            date TEXT
+        )
+    ''')
+    cursor.execute('''
+        INSERT INTO transactions (bank_number, amount, description, date)
+        VALUES (?, ?, ?, ?)
+    ''', (transaction['bank_number'], transaction['amount'], transaction['description'], transaction['date']))
+    conn.commit()
+    conn.close()
+    
+    print("Transaction added successfully!")
+    print(transaction)
+
 add_transaction()
