@@ -1,6 +1,6 @@
 '''
-This code is a function that ask for transaction details and add it to the database.
-The element include - bank number, amount, description and date(and time)
+This code is a function that asks for transaction details and adds it to the database.
+The elements include - bank number, amount, description, and date(and time)
 '''
 
 import datetime
@@ -23,12 +23,12 @@ def valid_date(date_str):       # Function to validate date
     except ValueError:
         return False
 
-def check_column():     # Function to check if the column exist in the database
+def check_column():     # Function to check if the column exists in the database
     conn = sqlite3.connect('personal_finance.db')
     cursor = conn.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS transactions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
             bank_number TEXT,
             amount REAL,
             description TEXT,
@@ -50,7 +50,7 @@ def remove_source_account_id(): # Function to remove source_account_id column
     # Ensure the transactions table has the correct structure
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS transactions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
             bank_number TEXT,
             amount REAL,
             description TEXT,
@@ -58,14 +58,14 @@ def remove_source_account_id(): # Function to remove source_account_id column
         )
     ''')
     
-    # Check if the id column exists
+    # Check if the transaction column exists
     cursor.execute("PRAGMA table_info(transactions);")
     columns = [column[1] for column in cursor.fetchall()]
-    if 'id' not in columns:
+    if 'transaction_id' not in columns:
         # Create a new table with the correct structure
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS transactions_new (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 bank_number TEXT,
                 amount REAL,
                 description TEXT,
@@ -76,8 +76,8 @@ def remove_source_account_id(): # Function to remove source_account_id column
 
     # Copy data from the old table to the new table
     cursor.execute('''
-        INSERT INTO transactions_new (bank_number, amount, description, date)
-        SELECT bank_number, amount, description, date
+        INSERT INTO transactions_new (transaction_id, bank_number, amount, description, date)
+        SELECT transaction_id, bank_number, amount, description, date
         FROM transactions
     ''')
     
@@ -92,8 +92,8 @@ def remove_source_account_id(): # Function to remove source_account_id column
 
 '''
 Following code is to add transaction to the database
-Where it copy the data from the old table to the new table
-and then drop the old table and rename the new table to the original table name
+Where it copies the data from the old table to the new table
+and then drops the old table and renames the new table to the original table name
 '''
 
 '''
@@ -149,7 +149,7 @@ def add_transaction():
     cursor = conn.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS transactions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
             bank_number TEXT,
             amount REAL,
             description TEXT,
