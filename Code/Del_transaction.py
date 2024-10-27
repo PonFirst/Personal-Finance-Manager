@@ -1,5 +1,7 @@
 '''
 delete transaction from the database
+the code will ask user whether they want to search by account or date or show all transaction 
+before they put in transaction id to delete
 '''
 
 import sqlite3
@@ -47,20 +49,23 @@ def search_by_date():
         
 # main function that ask whether user want to search by account or date or show full list of transaction to view before delete before they put in transaction id to delete
 def main():
-    search_by = input("Do you want to search by bank account or date? (account/date/show): ")
+    search_by = input("Do you want to search by bank account or date? (account/date/show all): ")
     if search_by.lower() == "account":
         search_by_account()
     elif search_by.lower() == "date":
         search_by_date()
-    elif search_by.lower() == "show":
+    elif search_by.lower() == "show all":
         show_transactions()
     else:
-        print("Invalid search option. Please enter 'account' or 'date' or 'show'.")
+        print("Invalid search option. Please enter 'account' or 'date' or 'show all'.")
         
     transaction_id = input("Enter the transaction id to delete: ")
-    delete_transaction('personal_finance.db', transaction_id)
+    try:
+        transaction_id = int(transaction_id)
+        delete_transaction('personal_finance.db', transaction_id)
+    except ValueError:
+        print("Invalid transaction id. Please enter a numeric value.")
     
 # Function to search for transaction in the personal finance database
 if __name__ == "__main__":
     main()
-    
