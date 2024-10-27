@@ -1,8 +1,3 @@
-'''
-This code is a function that asks for transaction details and adds it to the database.
-The elements include - bank number, amount, description, and date(and time)
-'''
-
 import datetime
 import sqlite3
 
@@ -61,7 +56,7 @@ def remove_source_account_id(): # Function to remove source_account_id column
     # Check if the transaction column exists
     cursor.execute("PRAGMA table_info(transactions);")
     columns = [column[1] for column in cursor.fetchall()]
-    if 'transaction_id' not in columns:
+    if 'source_account_id' in columns: # If the column exists, remove it
         # Create a new table with the correct structure
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS transactions_new (
@@ -74,33 +69,24 @@ def remove_source_account_id(): # Function to remove source_account_id column
         ''')
         
 
-    # Copy data from the old table to the new table
-    cursor.execute('''
-        INSERT INTO transactions_new (transaction_id, bank_number, amount, description, date)
-        SELECT transaction_id, bank_number, amount, description, date
-        FROM transactions
-    ''')
-    
-    # Drop the old table
-    cursor.execute('DROP TABLE transactions')
-    
-    # Rename the new table to the original table name
-    cursor.execute('ALTER TABLE transactions_new RENAME TO transactions')
+        # Copy data from the old table to the new table
+        cursor.execute('''
+            INSERT INTO transactions_new (transaction_id, bank_number, amount, description, date)
+            SELECT transaction_id, bank_number, amount, description, date
+            FROM transactions
+        ''')
+        
+        # Drop the old table
+        cursor.execute('DROP TABLE transactions')
+        
+        # Rename the new table to the original table name
+        cursor.execute('ALTER TABLE transactions_new RENAME TO transactions')
     
     conn.commit()
     conn.close()
 
-'''
-Following code is to add transaction to the database
-Where it copies the data from the old table to the new table
-and then drops the old table and renames the new table to the original table name
-'''
-
-'''
-Following code is the main function
-'''
-
 def add_transaction():
+    remove_source_account_id()  # Ensure the source_account_id column is removed
 
     while True:
         bank_number = input("Enter destination bank number (4 digits): ")
