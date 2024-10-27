@@ -2,37 +2,65 @@
 delete transaction from the database
 '''
 
-import csv
+import sqlite3
+from Add_transaction import *
+from Show_transaction import *
 
-# Function to delete transaction from the record
-def delete_transaction(file_path, bank_number):
+# Function to delete transaction from the database
+def delete_transaction(db_path, transaction_id):
     try:
-        with open(file_path, mode='r') as file:
-            csv_reader = csv.reader(file)
-            header = next(csv_reader)
-            transactions = list(csv_reader)
-    except FileNotFoundError:  # Just incase the file is error and cannot be found
-        print(f"The file {file_path} does not exist.")
-        return
-    except Exception as e:  # Catch all other exceptions
+        # Connect to the SQLite database
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        # Execute a query to delete a transaction by id
+        cursor.execute("DELETE FROM transactions WHERE id=?", (transaction_id,))
+        if cursor.rowcount == 0:
+            print(f"No transaction found with id {transaction_id}.")
+            return
+        
+        # Commit the transaction
+        conn.commit()
+        print(f"Transaction with id {transaction_id} deleted successfully.")
+        
+        # Close the connection
+        conn.close()
+        
+    except sqlite3.OperationalError as e:
         print(f"An error occurred: {e}")
-        return
-
-    # Find the transaction to delete
-    found = False
-    for transaction in transactions:
-        if transaction[0] == bank_number:
-            transactions.remove(transaction)
-            found = True
-            break
-
-    # If transaction not found, print a message and return
-    if not found:
-        print(f"Transaction with bank number {bank_number} not found.")
-        return
-
-    # Write the updated transactions to the file
-    with open(file_path, mode='w', newline='') as file:
-        csv_writer = csv.writer(file)
-        csv_writer.writerow(header)
-        csv
+         
+def search_by_account():
+    account_number = input("Enter the bank account number (4 digits): ")
+    if valid_bank_num(account_number):
+        # Add logic to search transactions by account number
+        print(f"Searching transactions for account number: {account_number}")
+    else:
+        print("Invalid bank account number. Please enter a 4-digit number.")
+        
+def search_by_date():
+    date_str = input("Enter the date (YYYY-MM-DD HH:MM:SS): ")
+    if valid_date(date_str):
+        # Add logic to search transactions by date
+        print(f"Searching transactions for date: {date_str}")
+    else:
+        print("Invalid date format. Please enter the date in the format YYYY-MM-DD HH:MM:SS.")
+        
+# main function that ask whether user want to search by account or date or show full list of transaction to view before delete before they put in transaction id to delete
+def main():
+    search_by = input("Do you want to search by bank account or date? (account/date/show): ")
+    if search_by.lower() == "account":
+        search_by_account()
+    elif search_by.lower() == "date":
+        search_by_date()
+    elif search_by.lower() == "show":
+        show_transactions()
+    else:
+        print("Invalid search option. Please enter 'account' or 'date' or 'show'.")
+        
+    transaction_id = input("Enter the transaction id to delete: ")
+    delete_transaction('personal_finance.db', transaction_id)
+    
+# Function to search for transaction in the personal finance database
+if __name__ == "__main__":
+    main()
+    
