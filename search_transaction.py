@@ -3,7 +3,6 @@ Function to search for transaction from database
 By asking if user want to search by Bank number or Date
 '''
 
-import csv
 import datetime
 import sqlite3
 
