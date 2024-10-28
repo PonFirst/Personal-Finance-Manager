@@ -1,0 +1,12 @@
+pylint Code/delete_account.py
+
+************* Module delete_account
+delete_account.py:21:0: C0301: Line too long (143/100) (line-too-long)
+delete_account.py:25:0: C0303: Trailing whitespace (trailing-whitespace)
+delete_account.py:38:0: C0304: Final newline missing (missing-final-newline)
+delete_account.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+delete_account.py:5:0: C0116: Missing function or method docstring (missing-function-docstring)
+delete_account.py:34:0: C0116: Missing function or method docstring (missing-function-docstring)
+
+-----------------------------------
+Your code has been rated at 7.00/10

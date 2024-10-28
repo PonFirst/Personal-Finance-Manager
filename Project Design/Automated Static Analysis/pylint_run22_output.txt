@@ -1,0 +1,12 @@
+pylint Code/add_account.py
+
+************* Module add_account
+add_account.py:152:0: C0305: Trailing newlines (trailing-newlines)
+add_account.py:71:4: R1705: Unnecessary "else" after "return", remove the "else" and de-indent the code inside it (no-else-return)
+add_account.py:86:8: W0707: Consider explicitly re-raising using 'except ValueError as exc' and 'raise ValueError('Balance must be a positive number.') from exc' (raise-missing-from)
+add_account.py:149:11: W0718: Catching too general exception Exception (broad-exception-caught)
+add_account.py:140:14: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+add_account.py:99:0: R1710: Either all return statements in a function should return an expression, or none of them should. (inconsistent-return-statements)
+
+------------------------------------------------------------------
+Your code has been rated at 9.14/10 (previous run: 9.14/10, +2.82)
