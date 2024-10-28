@@ -9,6 +9,7 @@ from budget_management import Budget
 import add_account
 import delete_account
 import show_account_balance
+import account_database
 
 
 def display_dashboard():
@@ -73,11 +74,12 @@ def account_management():
     try:
         choice = int(input("Choose a option: "))
         if choice == 1:
+            account_database.create_account_table()
             add_account.add_account()
         elif choice == 2:
             delete_account.delete_account()
         elif choice == 3:
-            show_account_balance.main()
+            show_account_balance.show_balance()
         else:
             print("Invalid Choice!")
     except ValueError:

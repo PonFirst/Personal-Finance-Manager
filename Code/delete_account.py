@@ -1,8 +1,11 @@
-# Delete account from the account database version 2
+""" Delete account from the account database version 2 """
 
 import sqlite3
 
 def delete_account():
+    """
+    function to delete an account
+    """
     # Get account name
     account_name = input("Enter account name: ")
 
@@ -18,11 +21,13 @@ def delete_account():
         print("Error: Account name does not exist.")
     else:
         # Ask for confirmation
-        confirmation = input(f"Are you sure to delete the account '{account_name}'? Type 'yes' to confirm or 'no' to cancel: ").strip().lower()
+        confirmation = input(f"Are you sure to delete the account '{account_name}'? "
+         "Type 'yes' to confirm or 'no' to cancel: ").strip().lower()
+
         if confirmation == 'yes':
             # Delete the account from the database
             cursor.execute('DELETE FROM Accounts WHERE name = ?', (account_name,))
-            
+
             # Commit the changes and close the connection
             connection.commit()
             print("Account deleted successfully!")
@@ -30,9 +35,3 @@ def delete_account():
             print("Account deletion canceled.")
 
     connection.close()
-
-def main():
-    delete_account()
-
-if __name__ == "__main__":
-    main()

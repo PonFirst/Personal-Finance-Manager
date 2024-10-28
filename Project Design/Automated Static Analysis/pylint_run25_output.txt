@@ -1,0 +1,16 @@
+pylint Code/show_account_balance.py
+
+************* Module show_account_balance
+show_account_balance.py:10:0: C0303: Trailing whitespace (trailing-whitespace)
+show_account_balance.py:15:0: C0303: Trailing whitespace (trailing-whitespace)
+show_account_balance.py:23:0: C0303: Trailing whitespace (trailing-whitespace)
+show_account_balance.py:33:0: C0303: Trailing whitespace (trailing-whitespace)
+show_account_balance.py:43:0: C0303: Trailing whitespace (trailing-whitespace)
+show_account_balance.py:9:0: C0116: Missing function or method docstring (missing-function-docstring)
+show_account_balance.py:14:0: C0116: Missing function or method docstring (missing-function-docstring)
+show_account_balance.py:22:0: C0116: Missing function or method docstring (missing-function-docstring)
+show_account_balance.py:32:0: C0116: Missing function or method docstring (missing-function-docstring)
+show_account_balance.py:42:0: C0116: Missing function or method docstring (missing-function-docstring)
+
+-------------------------------------------------------------------
+Your code has been rated at 7.56/10 

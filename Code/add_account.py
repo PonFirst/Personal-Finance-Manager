@@ -12,21 +12,30 @@ If the data is invalid, the program will raise an error message and ask user to 
 
 import sqlite3
 from account import Account
-from account_database import create_account_table
+
 
 def validate_account_type(account_type):
+    """
+    function to validate account type
+    """
     valid_types = ["Income", "Expense", "Asset", "Liability"]
-    account_type = account_type.title() 
+    account_type = account_type.title()
     if account_type not in valid_types:
         raise ValueError("Invalid account type.")
     return account_type
 
 def validate_account_name(account_name):
+    """
+    function to validate account name
+    """
     if not account_name.strip():
         raise ValueError("Account name cannot be empty.")
     return account_name
 
 def is_account_name_unique(account_name):
+    """
+    function to check if account name is unique
+    """
     connection = sqlite3.connect('personal_finance.db')
     cursor = connection.cursor()
     cursor.execute('SELECT name FROM Accounts WHERE name = ?', (account_name,))
@@ -37,31 +46,37 @@ def is_account_name_unique(account_name):
     return account_name
 
 def get_next_account_id(account_type):
+    """
+    function to get next account ID
+    """
     type_prefix = {
         "Income": "1",
         "Expense": "2",
         "Asset": "3",
         "Liability": "4"
     }
-    
+
     connection = sqlite3.connect('personal_finance.db')
     cursor = connection.cursor()
-    
+
     prefix = type_prefix[account_type]
     cursor.execute('''
         SELECT MAX(account_id) FROM Accounts 
         WHERE account_id LIKE ?
     ''', (prefix + '%',))
-    
+
     max_id = cursor.fetchone()[0]
     connection.close()
-    
+
     if max_id is None:
         return int(prefix + "001")
     else:
         return int(max_id) + 1
 
 def validate_amount(balance):
+    """
+    function to validate account balance
+    """
     try:
         balance = float(balance)
         if balance < 0:
@@ -71,6 +86,9 @@ def validate_amount(balance):
         raise ValueError("Balance must be a positive number.")
 
 def get_valid_input(prompt, validation_func):
+    """
+    function to get valid input
+    """
     while True:
         try:
             user_input = input(prompt)
@@ -79,49 +97,52 @@ def get_valid_input(prompt, validation_func):
             print(f"Error: {e} Please try again.")
 
 def add_account():
+    """
+    function to add account
+    """
     try:
         # Get account type with validation
         account_type = get_valid_input(
             "Enter account type (Income, Expense, Asset, Liability): ",
             validate_account_type
         )
-        
+
         # Get account name with validation and uniqueness check
         account_name = get_valid_input(
             "Enter account name: ",
             lambda name: is_account_name_unique(validate_account_name(name))
         )
-        
+
         # Get balance with validation
         balance = get_valid_input(
             "Enter amount of balance: ",
             validate_amount
         )
-        
+
         # Generate account ID
         account_id = get_next_account_id(account_type)
-        
+
         # Create an Account instance
         account = Account(account_id, account_name, account_type, balance)
-        
+
         # Connect to the database and add the account
         connection = sqlite3.connect('personal_finance.db')
         cursor = connection.cursor()
-        
+
         cursor.execute('''
             INSERT INTO Accounts (account_id, name, category, balance)
             VALUES (?, ?, ?, ?)
         ''', (account.account_id, account.name, account.category, account.balance))
-        
+
         connection.commit()
         connection.close()
-        
+
         print(f"\nAccount has been added successfully!")
         print(f"Account ID: {account_id}")
         print(f"Account Name: {account_name}")
         print(f"Account Type: {account_type}")
         print(f"Balance: ${balance:,.2f}")
-        
+
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
         return None
@@ -129,11 +150,3 @@ def add_account():
         print(f"An unexpected error occurred: {e}")
         return None
 
-def main():
-    # Initialize the database table
-    create_account_table()
-    # Add account
-    add_account()
-
-if __name__ == "__main__":
-    main()
