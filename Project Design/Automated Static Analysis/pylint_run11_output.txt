@@ -1,0 +1,7 @@
+pylint Code/account.py
+************* Module account
+Code/account.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+Code/account.py:2:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+
+------------------------------------------------------------------
+Your code has been rated at 7.14/10

@@ -1,0 +1,4 @@
+pylint Code/initialize_account.py
+
+-------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 9.02/10, +0.98)

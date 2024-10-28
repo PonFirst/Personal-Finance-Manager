@@ -1,3 +1,9 @@
+"""
+This module is use for displaying the user dashboard and getting
+user inputs to call functions like initialize account chart,
+account management, transaction management, and budget management.
+"""
+
 import initialize_account as init_acc
 from budget_management import Budget
 import add_account
@@ -6,6 +12,9 @@ import show_account_balance
 
 
 def display_dashboard():
+    """
+    This function is use to display the dashboard.
+    """
     while True:
         print("----User Dashboard----")
         print("1. Initialize account chart")
@@ -13,7 +22,7 @@ def display_dashboard():
         print("3. Transaction Management")
         print("4. Budget Management")
         print("5. Exit")
-        
+
         try:
             choice = int(input("Select an option: "))
             if choice == 1:
@@ -30,12 +39,16 @@ def display_dashboard():
                 print("Invalid Choice!\n")
         except ValueError:
             print("Invalid Choice!\n")
-            
-            
+
+
 def initialize_account_chart():
+    """
+    This function allow the user to choose to initialize
+    account by using template or their own.
+    """
     print("1. Use Template")
     print("2. Upload A Template")
-    
+
     try:
         choice = int(input("Choose a option: "))
         if choice == 1:
@@ -47,11 +60,16 @@ def initialize_account_chart():
     except ValueError:
         print("Invalid Choice!")
 
+
 def account_management():
+    """
+    This function allow the user to choose to
+    add, delete, or show account balance.
+    """
     print("1. Add account")
     print("2. Delete account")
     print("3. Show account balance")
-    
+
     try:
         choice = int(input("Choose a option: "))
         if choice == 1:
@@ -66,8 +84,12 @@ def account_management():
         print("Invalid Choice!")
 
 
-
 def budget_interface():
+    """
+    This function allow the user to choose to
+    add budget, delete budget, modify budget 
+    or view budget report.
+    """
     print("1. Add Budget")
     print("2. Modify Budget")
     print("3. Delete Budget")

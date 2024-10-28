@@ -1,0 +1,14 @@
+pylint Code/initialize_account.py
+************* Module initialize_account
+Code/initialize_account.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+Code/initialize_account.py:6:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/initialize_account.py:11:9: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
+Code/initialize_account.py:11:32: C0103: Variable name "f" doesn't conform to snake_case naming style (invalid-name)
+Code/initialize_account.py:24:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/initialize_account.py:28:13: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
+Code/initialize_account.py:28:36: C0103: Variable name "f" doesn't conform to snake_case naming style (invalid-name)
+Code/initialize_account.py:38:16: W0612: Unused variable 'columns_valid' (unused-variable)
+Code/initialize_account.py:3:0: C0411: standard import "import csv" should be placed before "import account_database" (wrong-import-order)
+
+------------------------------------------------------------------
+Your code has been rated at 7.80/10

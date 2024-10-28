@@ -1,3 +1,7 @@
+"""
+This module defined the account class.
+Created by Pon (First) Yimcharoen
+"""
 
 class Account:
     """
@@ -11,14 +15,9 @@ class Account:
     
     """
     VALID_CATEGORIES = ('Income', 'Expense', 'Asset', 'Liability')
-    
+
     def __init__(self, account_id, name, category, balance):
         self.account_id = account_id
         self.name = name
         self.category = category
         self.balance = balance
-        
-
-    
-        
-    

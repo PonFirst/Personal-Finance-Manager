@@ -1,0 +1,33 @@
+pylint Code/budget_management.py
+************* Module budget_management
+Code/budget_management.py:33:0: C0301: Line too long (109/100) (line-too-long)
+Code/budget_management.py:36:0: C0301: Line too long (101/100) (line-too-long)
+Code/budget_management.py:51:0: C0301: Line too long (115/100) (line-too-long)
+Code/budget_management.py:54:0: C0301: Line too long (116/100) (line-too-long)
+Code/budget_management.py:65:0: C0301: Line too long (105/100) (line-too-long)
+Code/budget_management.py:69:0: C0301: Line too long (113/100) (line-too-long)
+Code/budget_management.py:76:0: C0301: Line too long (111/100) (line-too-long)
+Code/budget_management.py:82:0: C0301: Line too long (107/100) (line-too-long)
+Code/budget_management.py:89:0: C0301: Line too long (114/100) (line-too-long)
+Code/budget_management.py:93:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/budget_management.py:96:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/budget_management.py:104:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/budget_management.py:108:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/budget_management.py:118:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/budget_management.py:126:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/budget_management.py:142:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/budget_management.py:144:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/budget_management.py:148:0: C0301: Line too long (110/100) (line-too-long)
+Code/budget_management.py:149:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/budget_management.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+Code/budget_management.py:18:4: C0116: Missing function or method docstring (missing-function-docstring)
+Code/budget_management.py:27:4: C0116: Missing function or method docstring (missing-function-docstring)
+Code/budget_management.py:39:12: R1723: Unnecessary "else" after "break", remove the "else" and de-indent the code inside it (no-else-break)
+Code/budget_management.py:44:16: C0103: Variable name "e" doesn't conform to snake_case naming style (invalid-name)
+Code/budget_management.py:60:4: C0116: Missing function or method docstring (missing-function-docstring)
+Code/budget_management.py:78:12: C0103: Variable name "e" doesn't conform to snake_case naming style (invalid-name)
+Code/budget_management.py:101:4: C0116: Missing function or method docstring (missing-function-docstring)
+Code/budget_management.py:123:4: C0116: Missing function or method docstring (missing-function-docstring)
+
+------------------------------------------------------------------
+Your code has been rated at 6.85/10

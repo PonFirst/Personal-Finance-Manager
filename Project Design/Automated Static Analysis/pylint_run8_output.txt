@@ -1,0 +1,4 @@
+pylint Code/account_database.py
+
+-------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 6.56/10, +3.44)

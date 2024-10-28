@@ -1,0 +1,16 @@
+pylint Code/account_database.py
+************* Module account_database
+Code/account_database.py:34:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/account_database.py:59:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/account_database.py:60:0: C0301: Line too long (103/100) (line-too-long)
+Code/account_database.py:61:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/account_database.py:63:0: C0301: Line too long (106/100) (line-too-long)
+Code/account_database.py:68:0: C0304: Final newline missing (missing-final-newline)
+Code/account_database.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+Code/account_database.py:4:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/account_database.py:18:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/account_database.py:36:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/account_database.py:56:0: C0116: Missing function or method docstring (missing-function-docstring)
+
+-----------------------------------
+Your code has been rated at 6.56/10

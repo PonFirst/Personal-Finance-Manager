@@ -1,7 +1,16 @@
+"""
+This module is use to create the account table, transaction table,
+budget table, and inserting new accounts into the account table.
+Created by Pon (First) Yimcharoen
+"""
+
 import sqlite3
 
-# Create Account table
+
 def create_account_table():
+    """
+    This function is use to create the account table
+    """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
     sql_command = """CREATE TABLE IF NOT EXISTS Accounts (
@@ -14,8 +23,11 @@ def create_account_table():
     connection.commit()
     connection.close()
 
-# Create Transactions table
+
 def create_transactions_table():
+    """
+    This function is use to create the transaction table
+    """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
     sql_command = """CREATE TABLE IF NOT EXISTS Transactions (
@@ -31,9 +43,12 @@ def create_transactions_table():
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
-    
-# Create Budget table
+
+
 def create_budget_table():
+    """
+    This function is use to create the budget table
+    """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
 
@@ -54,13 +69,18 @@ def create_budget_table():
 
 # Insert account
 def insert_account(account):
+    """
+    This function is use to insert the account into the account table.
+    """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
-    
-    sql_command = """INSERT INTO Accounts (account_id, name, category, balance) VALUES (?, ?, ?, ?);"""
-    
+
+    sql_command = """INSERT INTO Accounts (account_id, name, category, balance)
+    VALUES (?, ?, ?, ?);"""
+
     try:
-        cursor.execute(sql_command, (account.account_id, account.name, account.category, account.balance))
+        cursor.execute(sql_command, (account.account_id, account.name,
+                                     account.category, account.balance))
         connection.commit()
     except sqlite3.IntegrityError:
         print(f"Account ID {account.account_id} already exists. Skipping this entry.")

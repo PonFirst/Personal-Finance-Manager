@@ -1,0 +1,16 @@
+pylint Code/user_dashboard.py
+************* Module user_dashboard
+Code/user_dashboard.py:16:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/user_dashboard.py:33:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/user_dashboard.py:34:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/user_dashboard.py:38:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/user_dashboard.py:54:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/user_dashboard.py:89:0: C0304: Final newline missing (missing-final-newline)
+Code/user_dashboard.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+Code/user_dashboard.py:8:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/user_dashboard.py:35:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/user_dashboard.py:50:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/user_dashboard.py:70:0: C0116: Missing function or method docstring (missing-function-docstring)
+
+-----------------------------------
+Your code has been rated at 8.51/10
