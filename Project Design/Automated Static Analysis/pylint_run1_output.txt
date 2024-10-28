@@ -1,0 +1,7 @@
+pylint Code/main.py
+************* Module main
+Code/main.py:13:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/main.py:15:0: C0304: Final newline missing (missing-final-newline)
+
+------------------------------------------------------------------
+Your code has been rated at 6.67/10
