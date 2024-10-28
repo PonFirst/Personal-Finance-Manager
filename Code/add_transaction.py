@@ -91,6 +91,7 @@ def remove_source_account_id(): # Function to remove source_account_id column
     conn.close()
 
 def add_transaction():
+    check_column()  # Ensure the bank_number column is added if it doesn't exist
     remove_source_account_id()  # Ensure the source_account_id column is removed
 
     while True:
