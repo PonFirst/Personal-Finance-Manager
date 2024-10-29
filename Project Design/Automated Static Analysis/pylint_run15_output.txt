@@ -1,0 +1,17 @@
+pylint Code/show_transaction.py
+************* Module show_transaction
+Code/show_transaction.py:13:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/show_transaction.py:15:52: C0303: Trailing whitespace (trailing-whitespace)
+Code/show_transaction.py:16:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/show_transaction.py:19:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/show_transaction.py:24:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/show_transaction.py:29:0: C0301: Line too long (124/100) (line-too-long)
+Code/show_transaction.py:34:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/show_transaction.py:37:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/show_transaction.py:44:0: C0304: Final newline missing (missing-final-newline)
+Code/show_transaction.py:8:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/show_transaction.py:38:4: C0103: Variable name "e" doesn't conform to snake_case naming style (invalid-name)
+Code/show_transaction.py:43:4: C0103: Constant name "file_path" doesn't conform to UPPER_CASE naming style (invalid-name)
+
+-----------------------------------
+Your code has been rated at 4.78/10
