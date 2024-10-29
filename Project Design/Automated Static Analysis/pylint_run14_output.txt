@@ -1,0 +1,4 @@
+pylint Code/add_transaction.py
+
+-------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 10/10, +2.47)
