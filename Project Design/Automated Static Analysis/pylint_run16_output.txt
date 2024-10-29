@@ -1,0 +1,4 @@
+pylint Code/show_transaction.py
+
+--------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 4.78/10, +5.22)
