@@ -1,0 +1,33 @@
+pylint Code/delete_transaction.py
+************* Module delete_transaction
+Code/delete_transaction.py:3:93: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:8:68: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:17:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:23:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:27:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:30:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:33:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:41:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:42:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:50:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:51:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:52:0: C0301: Line too long (170/100) (line-too-long)
+Code/delete_transaction.py:63:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:70:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/delete_transaction.py:73:0: C0304: Final newline missing (missing-final-newline)
+Code/delete_transaction.py:9:0: W0401: Wildcard import show_transaction (wildcard-import)
+Code/delete_transaction.py:12:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/delete_transaction.py:31:4: C0103: Variable name "e" doesn't conform to snake_case naming style (invalid-name)
+Code/delete_transaction.py:34:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/delete_transaction.py:36:7: E0602: Undefined variable 'at' (undefined-variable)
+Code/delete_transaction.py:43:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/delete_transaction.py:45:7: E0602: Undefined variable 'at' (undefined-variable)
+Code/delete_transaction.py:53:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/delete_transaction.py:60:8: E1120: No value for argument 'db_path' in function call (no-value-for-parameter)
+Code/delete_transaction.py:8:0: W0611: Unused valid_amount imported from add_transaction (unused-import)
+Code/delete_transaction.py:8:0: W0611: Unused valid_bank_num imported from add_transaction (unused-import)
+Code/delete_transaction.py:8:0: W0611: Unused valid_date imported from add_transaction (unused-import)
+Code/delete_transaction.py:9:0: W0614: Unused import FILE_PATH from wildcard import (unused-wildcard-import)
+
+-----------------------------------
+Your code has been rated at 0.70/10
