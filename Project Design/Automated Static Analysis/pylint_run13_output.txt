@@ -1,0 +1,25 @@
+pylint Code/add_transaction.py
+************* Module add_transaction
+Code/add_transaction.py:45:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/add_transaction.py:49:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/add_transaction.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/add_transaction.py:75:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/add_transaction.py:83:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/add_transaction.py:86:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/add_transaction.py:89:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/add_transaction.py:154:0: C0301: Line too long (110/100) (line-too-long)
+Code/add_transaction.py:157:0: C0303: Trailing whitespace (trailing-whitespace)
+Code/add_transaction.py:161:0: C0304: Final newline missing (missing-final-newline)
+Code/add_transaction.py:9:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/add_transaction.py:12:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/add_transaction.py:19:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/add_transaction.py:26:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/add_transaction.py:46:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/add_transaction.py:93:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/add_transaction.py:99:8: R1723: Unnecessary "else" after "break" (no-else-break)
+Code/add_transaction.py:106:8: R1723: Unnecessary "else" after "break" (no-else-break)
+Code/add_transaction.py:116:8: R1723: Unnecessary "else" after "break" (no-else-break)
+Code/add_transaction.py:134:4: R1705: Unnecessary "elif" after "return" (no-else-return)
+
+-----------------------------------
+Your code has been rated at 7.53/10
