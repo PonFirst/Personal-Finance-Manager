@@ -1,0 +1,12 @@
+(warp) (base) kasidith@1246 Personal-Finance-Manager % pylint Code/search_transaction.py
+************* Module search_transaction
+Code/search_transaction.py:33:0: C0301: Line too long (138/100) (line-too-long)
+Code/search_transaction.py:50:0: C0301: Line too long (103/100) (line-too-long)
+Code/search_transaction.py:9:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/search_transaction.py:12:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/search_transaction.py:19:0: C0116: Missing function or method docstring (missing-function-docstring)
+Code/search_transaction.py:47:12: R1723: Unnecessary "else" after "break" (no-else-break)
+Code/search_transaction.py:19:0: R0912: Too many branches (13/12) (too-many-branches)
+
+-----------------------------------
+Your code has been rated at 8.57/10
