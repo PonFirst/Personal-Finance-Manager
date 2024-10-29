@@ -1,0 +1,4 @@
+(warp) (base) kasidith@1246 Personal-Finance-Manager % pylint Code/search_transaction.py
+
+-------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 9.80/10, +0.20)
