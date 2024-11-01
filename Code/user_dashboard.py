@@ -35,7 +35,7 @@ def display_dashboard():
             elif choice == 2:
                 account_management()
             elif choice == 3:
-                pass
+                transaction_management()
             elif choice == 4:
                 budget_interface()
             elif choice == 5:
@@ -91,8 +91,25 @@ def account_management():
 
 
 def transaction_management():
-    
+    print("1. Add Transaction")
+    print("2. Search Transaction")
+    print("3. Delete Transaction")
+    print("4. View Transaction")
 
+    try:
+        choice = int(input("Choose a option: "))
+        if choice == 1:
+            add_transaction.add_transaction()
+        elif choice == 2:
+            search_transaction.search_transaction()
+        elif choice == 3:
+            delete_transaction.delete_transaction()
+        elif choice == 4:
+            show_transaction.show_transactions()
+        else:
+            print("Invalid Choice!")
+    except ValueError:
+        print("Invalid Choice!")
 
 def budget_interface():
     """
