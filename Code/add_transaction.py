@@ -1,6 +1,8 @@
 '''
 This function ask for details of a transaction and add it to the database.
 The element include bank number, amount, description, and date(and time).
+
+Created by Copter
 '''
 
 import datetime
