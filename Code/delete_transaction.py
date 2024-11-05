@@ -2,6 +2,8 @@
 delete transaction from the database
 the code will ask user whether they want to search by account or date or show all transaction
 before they put in transaction id to delete
+
+Created by Copter
 '''
 
 import sqlite3
