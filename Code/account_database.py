@@ -9,7 +9,7 @@ import sqlite3
 
 def create_account_table():
     """
-    This function is use to create the account table
+    This function is use to create the account table.
     """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
@@ -22,11 +22,22 @@ def create_account_table():
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
+    
+
+def clear_account_table():
+    """
+    This function is use to clear the account table
+    """
+    connection = sqlite3.connect("personal_finance.db")
+    cursor = connection.cursor()
+    cursor.execute("DELETE FROM Accounts;")
+    connection.commit()
+    connection.close()
 
 
 def create_transactions_table():
     """
-    This function is use to create the transaction table
+    This function is use to create the transaction table.
     """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
@@ -43,16 +54,26 @@ def create_transactions_table():
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
+    
+    
+def clear_transactions_table():
+    """
+    This function is use to clear the transaction table.
+    """
+    connection = sqlite3.connect("personal_finance.db")
+    cursor = connection.cursor()
+    cursor.execute("DELETE FROM Transactions;")
+    connection.commit()
+    connection.close()
 
 
 def create_budget_table():
     """
-    This function is use to create the budget table
+    This function is use to create the budget table.
     """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
 
-    # Create Budgets table if it doesn't exist
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS Budgets (
             budget_id INTEGER PRIMARY KEY,
@@ -65,9 +86,19 @@ def create_budget_table():
 
     connection.commit()
     connection.close()
+    
+    
+def clear_budget_table():
+    """
+    This function is use to clear the budget table.
+    """
+    connection = sqlite3.connect("personal_finance.db")
+    cursor = connection.cursor()
+    cursor.execute("DELETE FROM Budgets;")
+    connection.commit()
+    connection.close()
 
 
-# Insert account
 def insert_account(account):
     """
     This function is use to insert the account into the account table.
