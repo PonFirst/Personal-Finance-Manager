@@ -2,6 +2,7 @@
 This module is use for displaying the user dashboard and getting
 user inputs to call functions like initialize account chart,
 account management, transaction management, and budget management.
+
 """
 
 import initialize_account as init_acc
