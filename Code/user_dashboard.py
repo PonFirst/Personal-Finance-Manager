@@ -112,6 +112,7 @@ def transaction_management():
     except ValueError:
         print("Invalid Choice!")
 
+
 def budget_interface():
     """
     This function allow the user to choose to
