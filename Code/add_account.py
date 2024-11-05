@@ -1,5 +1,6 @@
 """
-Add account function for personal finance manager to add new account to database
+add_account.py
+Function for personal finance manager to add new account to database
 Add Account Create a new account that contains, Account type, Account name, Account ID
 and account balance. The program will generate four digit account ID based on user account type.
 
@@ -8,6 +9,8 @@ if there are more this type of account the next account ID will be 1002 and so o
 The program will validate the account type, account name, account ID, and account balance. 
 If the data is valid, the program will add the account to the database. 
 If the data is invalid, the program will raise an error message and ask user to reinput data
+
+Created by Baipor.
 """
 
 import sqlite3

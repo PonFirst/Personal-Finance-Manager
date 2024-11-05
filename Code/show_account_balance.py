@@ -1,16 +1,16 @@
-"""show_account_balance02.py 
+"""
+show_account_balance.py 
 Program to show the account balance that lets the user choose 
 to display all accounts or a selected account, which is kept in the personal_finance.db database.
-version 2"""
+Create by Baipor.
+"""
 
 import sqlite3
 
-
 def connect_db():
     """
-      function to connect to the database
+    Function to connect to the database
     """
-    # Connect to the SQLite database
     return sqlite3.connect('personal_finance.db')
 
 def display_all_accounts(connection):
@@ -25,7 +25,7 @@ def display_all_accounts(connection):
 
 def display_selected_account_by_id(connection, account_id):
     """
-    function to display balance selected account by ID
+    Function to display balance of selected account by ID
     """
     cursor = connection.cursor()
     cursor.execute("SELECT name, balance FROM Accounts WHERE account_id = ?", (account_id,))
@@ -37,7 +37,7 @@ def display_selected_account_by_id(connection, account_id):
 
 def display_selected_account_by_name(connection, account_name):
     """ 
-    function to display balance of selected account by name
+    Function to display balance of selected account by name
     """
     cursor = connection.cursor()
     cursor.execute("SELECT account_id, balance FROM Accounts WHERE name = ?", (account_name,))
@@ -49,32 +49,36 @@ def display_selected_account_by_name(connection, account_name):
 
 def show_balance():
     """ 
-    main function
+    Main function
     """
     connection = connect_db()
     try:
         while True:
             choice = input(
-                     "Enter 'all' to show balance of all accounts,\n"
-                    "'select by ID' to show balance by an account ID,\n"
-                    "'select by name' to show balance of an account by name, "
-                    "or 'exit' to exit the program: "
-                    ).strip().lower()
+                "Enter '1' to show balance of all accounts,\n"
+                "'2' to show balance by an account ID,\n"
+                "'3' to show balance of an account by name,\n"
+                "or '4' to exit the program: "
+            ).strip()
 
-            if choice == 'all':
+            if choice == '1':
                 display_all_accounts(connection)
-            elif choice == 'select by id':
+            elif choice == '2':
                 account_id = input("Enter the account ID: ").strip()
-                display_selected_account_by_id(connection, account_id)
-            elif choice == 'select by name':
+                if account_id.isdigit():
+                    display_selected_account_by_id(connection, account_id)
+                else:
+                    print("Invalid account ID. Please enter a numeric value.")
+            elif choice == '3':
                 account_name = input("Enter the account name: ").strip()
                 display_selected_account_by_name(connection, account_name)
-            elif choice == 'exit':
+            elif choice == '4':
                 print("Exiting the program.")
                 break
             else:
-                print("Invalid choice. Please enter 'all accounts', "
-                      "'select account by ID', 'select account by name', or 'exit'.")
+                print("Invalid choice. Please enter '1', '2', '3', or '4'.")
 
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
     finally:
         connection.close()
