@@ -8,6 +8,7 @@ if there are more this type of account the next account ID will be 1002 and so o
 The program will validate the account type, account name, account ID, and account balance. 
 If the data is valid, the program will add the account to the database. 
 If the data is invalid, the program will raise an error message and ask user to reinput data
+
 """
 
 import sqlite3
