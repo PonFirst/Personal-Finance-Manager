@@ -34,7 +34,7 @@ def search_transaction():
     choice = input("Enter your choice (1 or 2): ")
 
     if choice == "1":
-        bank_number = input("Enter the bank number to search for: ")
+        bank_number = input("Enter the source account id to search for: ")
         if not valid_id(bank_number):
             print("Invalid bank number. Please enter a 4-digit number.")
             return
@@ -42,19 +42,21 @@ def search_transaction():
         connection = sqlite3.connect("personal_finance.db")
         cursor = connection.cursor()
         query = (
-            "SELECT * FROM Transactions WHERE source_account_id = ? "
-            "OR destination_account_id = ?"
+            "SELECT * FROM Transactions WHERE source_account_id = ?"
         )
-        cursor.execute(query, (bank_number, bank_number))
+        cursor.execute(query, (bank_number,))
         results = cursor.fetchall()
+        column_names = [description[0] for description in cursor.description]
         connection.close()
 
         if not results:
             print(f"No transactions found for bank number {bank_number}.")
-
-        print("Transactions found:")
-        for result in results:
-            print(result)
+        else:
+            print("Transactions found:")
+            for result in results:
+                for col_name, value in zip(column_names, result):
+                    print(f"{col_name}: {value}")
+                print()
 
     elif choice == "2":
         while True:
@@ -67,6 +69,7 @@ def search_transaction():
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM Transactions WHERE date = ?", (date_str,))
         results = cursor.fetchall()
+        column_names = [description[0] for description in cursor.description]
         connection.close()
 
         if not results:
@@ -74,7 +77,9 @@ def search_transaction():
         else:
             print("Transactions found:")
             for result in results:
-                print(result)
+                for col_name, value in zip(column_names, result):
+                    print(f"{col_name}: {value}")
+                print()
 
     else:
         print("Invalid choice. Please enter 1 or 2.")
