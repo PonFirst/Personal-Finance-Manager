@@ -1,5 +1,6 @@
 '''
 Show all transactions in the file personal_finance.db file
+Created by Copter
 '''
 
 import sqlite3

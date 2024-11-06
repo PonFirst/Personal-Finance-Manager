@@ -33,18 +33,30 @@ class Budget:
 
     def add_budget(self):
         """
-        This function is use to add a budget with specified category, amount, and account ID.
+        This function is used to add a budget with specified category, amount, and account ID.
         """
         connection = self._connect()
         cursor = connection.cursor()
 
         while True:
-            category = self.get_valid_category("Enter the category for your budget: ")
+            category = self.get_valid_category("Enter the category for your budget (Or type cancel to exit): ")
+            if category.lower() == "cancel":
+                print("Operation canceled.")
+                break
+
+            # Check if the category already exists in Budgets
+            cursor.execute("SELECT budgeted_amount, account_id FROM Budgets WHERE category = ?", (category,))
+            existing_budget = cursor.fetchone()
+
+            if existing_budget:
+                print(f"Category '{category}' already exists with a budget of {existing_budget[0]:.2f},"
+                    f" linked to Account ID: {existing_budget[1]}.")
+                continue
+
             account_id = input("Enter the account ID of this budget (Expense type): ").strip()
 
-            # Check if the account is valid and an Expense account
-            cursor.execute("SELECT name, category FROM Accounts WHERE account_id = ?",
-                           (account_id,))
+            # Verify that the account ID is valid and of type 'Expense'
+            cursor.execute("SELECT name, category FROM Accounts WHERE account_id = ?", (account_id,))
             account_info = cursor.fetchone()
 
             if account_info and account_info[1] == "Expense":
@@ -56,19 +68,20 @@ class Budget:
                     print(f"Invalid budget amount! {error}")
                     continue
 
+                # Insert the new budget
                 cursor.execute(
                     "INSERT INTO Budgets (category, budgeted_amount, account_id) VALUES (?, ?, ?)",
                     (category, amount, account_id)
                 )
-                print(f"Budget for '{category}' added with amount: "
-                      f"{amount:.2f} linked to account '{account_id}'.")
-                break
+                print(f"Budget for '{category}' added with amount: {amount:.2f} linked to account '{account_id}'.")
+                break  # Exit after successful addition
 
-            print(f"Invalid or non-expense account ID '{account_id}'."
-                  f"Please enter a valid Expense account ID.")
+            else:
+                print(f"Invalid or non-expense account ID '{account_id}'. Please enter a valid Expense account ID.")
 
         connection.commit()
         connection.close()
+
 
     def modify_budget(self):
         """
@@ -77,13 +90,16 @@ class Budget:
         connection = self._connect()
         cursor = connection.cursor()
 
-        category = self.get_valid_category("Enter the category of the budget to modify: ")
+        category = self.get_valid_category("Enter the category of the budget to modify (Or type cancel to exit): ")
+        if category.lower() == "cancel":
+            print("Operation canceled.")
+            return
         cursor.execute("SELECT budgeted_amount, account_id FROM Budgets WHERE category = ?",
                         (category,))
         existing_budget = cursor.fetchone()
 
         if existing_budget:
-            print(f"Current budget for '{category}': {existing_budget[0]:.2f},"
+            print(f"Current budget for '{category}': {existing_budget[0]:.2f}, "
                   f"Account ID: {existing_budget[1]}")
 
             # Modify the budget amount
@@ -125,6 +141,7 @@ class Budget:
         connection.close()
 
 
+
     def delete_budget(self):
         """
         This function is use to delete a budget.
@@ -132,7 +149,10 @@ class Budget:
         connection = self._connect()
         cursor = connection.cursor()
 
-        category = self.get_valid_category("Enter the category of the budget to delete: ")
+        category = self.get_valid_category("Enter the category of the budget to delete (Or type cancel to exit): ")
+        if category.lower() == "cancel":
+            print("Operation canceled.")
+            return
         cursor.execute("SELECT budgeted_amount FROM Budgets WHERE category = ?", (category,))
         existing_budget = cursor.fetchone()
 
