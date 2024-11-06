@@ -60,10 +60,14 @@ def delete_account():
         try:
             # Delete the account's transactions
             cursor.execute('DELETE FROM Transactions WHERE account_id = ?', (account_id,))
+            print("Transactions deleted successfully!")
+            
             # Delete the account's budget
             cursor.execute('DELETE FROM Budgets WHERE account_id = ?', (account_id,))
+            print("Budget deleted successfully!")
             # Delete the account from the database
             cursor.execute('DELETE FROM Accounts WHERE account_id = ?', (account_id,))
+            print("Account deleted successfully!")
 
             # Commit the changes
             connection.commit()
