@@ -21,7 +21,7 @@ def display_all_accounts(connection):
     cursor.execute("SELECT account_id, name, balance FROM Accounts")
     accounts = cursor.fetchall()
     for account in accounts:
-        print(f"Account ID: {account[0]}, Account Name: {account[1]}, Balance: {account[2]}")
+        print(f"Account ID: {account[0]}, Account Name: {account[1]}, Balance: {account[2]}\n")
 
 def display_selected_account_by_id(connection, account_id):
     """
@@ -43,9 +43,9 @@ def display_selected_account_by_name(connection, account_name):
     cursor.execute("SELECT account_id, balance FROM Accounts WHERE name = ?", (account_name,))
     account = cursor.fetchone()
     if account:
-        print(f"Account Name: {account_name}, Account ID: {account[0]}, Balance: {account[1]}")
+        print(f"Account Name: {account_name}, Account ID: {account[0]}, Balance: {account[1]}\n")
     else:
-        print(f"No account found with name: {account_name}")
+        print(f"No account found with name: {account_name}\n")
 
 def show_balance():
     """ 
@@ -55,7 +55,7 @@ def show_balance():
     try:
         while True:
             choice = input(
-                "Enter '1' to show balance of all accounts,\n"
+                "\nEnter '1' to show balance of all accounts,\n"
                 "'2' to show balance by an account ID,\n"
                 "'3' to show balance of an account by name,\n"
                 "or '4' to exit the program: "
@@ -76,7 +76,7 @@ def show_balance():
                 print("Exiting the program.")
                 break
             else:
-                print("Invalid choice. Please enter '1', '2', '3', or '4'.")
+                print("Invalid choice. Please enter '1', '2', '3', or '4'.\n")
 
     except sqlite3.Error as e:
         print(f"An error occurred: {e}")
