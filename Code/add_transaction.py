@@ -60,6 +60,12 @@ def check_column():
     conn.commit()
     conn.close()
 
+def id_check(source_account_id, account_id):
+    """
+    Function to check if source account id and destination account id are the same
+    """
+    return source_account_id == account_id
+
 def add_transaction():
     '''
     Function to add a transaction to the database
@@ -76,9 +82,12 @@ def add_transaction():
     while True:
         account_id = input("Enter destination account id (4 digits): ")
         if valid_bank_num(account_id):
-            break
-
-        print("Invalid account id. Please enter a 4-digit number.")
+            if not id_check(source_account_id, account_id):
+                break
+            else:
+                print("Source account id and destination account id cannot be the same.")
+        else:
+            print("Invalid account id. Please enter a 4-digit number.")
 
     while True:
         amount = input("Enter the transaction amount: ")
