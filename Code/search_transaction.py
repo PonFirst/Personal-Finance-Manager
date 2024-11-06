@@ -34,7 +34,7 @@ def search_transaction():
     choice = input("Enter your choice (1 or 2): ")
 
     if choice == "1":
-        account_id = input("Enter the bank number to search for: ")
+        account_id = input("Enter the source account id to search for: ")
         if not valid_id(account_id):
             print("Invalid bank number. Please enter a 4-digit number.")
             return
@@ -44,7 +44,7 @@ def search_transaction():
         query = (
             "SELECT * FROM Transactions WHERE source_account_id = ?"
         )
-        cursor.execute(query, (account_id, account_id))
+        cursor.execute(query, (account_id,))
         results = cursor.fetchall()
         column_names = [description[0] for description in cursor.description]
         connection.close()
