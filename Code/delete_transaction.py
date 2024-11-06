@@ -121,3 +121,6 @@ def main():
             break
         except ValueError:
             print("Invalid transaction id. Please enter a numeric value.")
+            
+if __name__ == "__main__":
+    main()
