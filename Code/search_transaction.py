@@ -34,13 +34,8 @@ def search_transaction():
     choice = input("Enter your choice (1 or 2): ")
 
     if choice == "1":
-<<<<<<< HEAD
-        account_id = input("Enter the bank number to search for: ")
+        account_id = input("Enter the source account id to search for: ")
         if not valid_id(account_id):
-=======
-        bank_number = input("Enter the source account id to search for: ")
-        if not valid_id(bank_number):
->>>>>>> a79d9cb1dfb87bf884626f5814427253c3cc9f1a
             print("Invalid bank number. Please enter a 4-digit number.")
             return
 
@@ -49,31 +44,17 @@ def search_transaction():
         query = (
             "SELECT * FROM Transactions WHERE source_account_id = ?"
         )
-<<<<<<< HEAD
-        cursor.execute(query, (account_id, account_id))
-=======
-        cursor.execute(query, (bank_number,))
->>>>>>> a79d9cb1dfb87bf884626f5814427253c3cc9f1a
+        cursor.execute(query, (account_id,))
         results = cursor.fetchall()
         column_names = [description[0] for description in cursor.description]
         connection.close()
 
         if not results:
-<<<<<<< HEAD
             print(f"No transactions found for bank number {account_id}.")
 
         print("Transactions found:")
         for result in results:
             print(result)
-=======
-            print(f"No transactions found for bank number {bank_number}.")
-        else:
-            print("Transactions found:")
-            for result in results:
-                for col_name, value in zip(column_names, result):
-                    print(f"{col_name}: {value}")
-                print()
->>>>>>> a79d9cb1dfb87bf884626f5814427253c3cc9f1a
 
     elif choice == "2":
         while True:

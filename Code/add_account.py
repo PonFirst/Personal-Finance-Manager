@@ -10,15 +10,11 @@ The program will validate the account type, account name, account ID, and accoun
 If the data is valid, the program will add the account to the database. 
 If the data is invalid, the program will raise an error message and ask user to reinput data
 
-<<<<<<< HEAD
-=======
 Created by Baipor.
->>>>>>> bd6e9d46f7700ff40fa6b94f3601dc51b67b71a5
 """
 
 import sqlite3
 from account import Account
-
 
 def validate_account_type(account_type):
     """
