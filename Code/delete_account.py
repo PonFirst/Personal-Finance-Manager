@@ -58,13 +58,20 @@ def delete_account():
 
     if confirmation == 'y':
         try:
-            # Delete the account's transactions
+            # Delete the account's transactions if they exist
             cursor.execute('DELETE FROM Transactions WHERE account_id = ?', (account_id,))
-            print("Transactions deleted successfully!")
-            
-            # Delete the account's budget
+            if cursor.rowcount > 0:
+                print("Transactions deleted successfully!")
+            else:
+                print("No transactions found for this account.")
+
+            # Delete the account's budget if it exists
             cursor.execute('DELETE FROM Budgets WHERE account_id = ?', (account_id,))
-            print("Budget deleted successfully!")
+            if cursor.rowcount > 0:
+                print("Budget deleted successfully!")
+            else:
+                print("No budget found for this account.")
+
             # Delete the account from the database
             cursor.execute('DELETE FROM Accounts WHERE account_id = ?', (account_id,))
             print("Account deleted successfully!")
