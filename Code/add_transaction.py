@@ -43,6 +43,7 @@ def check_column():
         CREATE TABLE IF NOT EXISTS transactions (
             transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
             source_account_id TEXT,
+            destination_account_id TEXT NOT NULL,
             account_id TEXT,
             amount REAL,
             description TEXT,
@@ -129,26 +130,14 @@ def add_transaction():
 
     conn = sqlite3.connect('personal_finance.db')
     cursor = conn.cursor()
+    
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS transactions (
-            transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            source_account_id TEXT,
-            account_id TEXT,
-            amount REAL,
-            description TEXT,
-            date TEXT
-        )
-    ''')
-    cursor.execute('''
-        INSERT INTO transactions (source_account_id, account_id, amount, description, date)
-        VALUES (?, ?, ?, ?, ?)
-    ''', (transaction['source_account_id'], transaction['account_id'],
+        INSERT INTO transactions (source_account_id, destination_account_id, account_id, amount, description, date)
+        VALUES (?, ?, ?, ?, ?, ?)
+    ''', (transaction['source_account_id'], transaction['account_id'], transaction['account_id'],
           transaction['amount'], transaction['description'], transaction['date']))
     conn.commit()
     conn.close()
 
     print("Transaction added successfully!")
     print(transaction)
-
-if __name__ == '__main__':
-    add_transaction()

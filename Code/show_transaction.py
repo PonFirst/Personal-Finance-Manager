@@ -5,17 +5,17 @@ Created by Copter
 
 import sqlite3
 
-def show_transactions(db_path):
+def show_transactions():
     '''
     Function to show all transactions in the database
     '''
     try:
         # Connect to the SQLite database
-        conn = sqlite3.connect(db_path)
+        conn = sqlite3.connect("personal_finance.db")
         cursor = conn.cursor()
 
         # Execute a query to select all transactions
-        cursor.execute("SELECT * FROM Transactions")
+        cursor.execute("SELECT * FROM Transactions;")
         # Fetch all rows from the executed query
         rows = cursor.fetchall()
 
@@ -39,8 +39,3 @@ def show_transactions(db_path):
 
     except sqlite3.OperationalError as _:
         print(f"An error occurred: {_}")
-
-# Main function to run the script
-if __name__ == "__main__":
-    FILE_PATH = 'personal_finance.db'  # Define the file path
-    show_transactions(FILE_PATH)
