@@ -21,7 +21,7 @@ def delete_transaction(db_path, transaction_id):
         cursor = conn.cursor()
 
         # Execute a query to delete a transaction by id
-        cursor.execute("DELETE FROM transactions WHERE id=?", (transaction_id,))
+        cursor.execute("DELETE FROM transactions WHERE transaction_id=?", (transaction_id,))
         if cursor.rowcount == 0:
             print(f"No transaction found with id {transaction_id}.")
             return
@@ -40,10 +40,28 @@ def search_by_account():
     """
     Search transactions by bank account number.
     """
-    account_number = input("Enter the bank account number (4 digits): ")
+    account_number = input("Enter the bank id number (4 digits): ")
     if valid_bank_num(account_number):
-        # Add logic to search transactions by account number
-        print(f"Searching transactions for account number: {account_number}")
+        # Connect to the SQLite database
+        conn = sqlite3.connect('personal_finance.db')
+        cursor = conn.cursor()
+
+        # Execute a query to search transactions by account number
+        cursor.execute("SELECT * FROM transactions WHERE source_account_id=?", (account_number,))
+        transactions = cursor.fetchall()
+
+        if transactions:
+            print(f"Transactions for account number {account_number}:")
+            column_names = [description[0] for description in cursor.description]
+            for transaction in transactions:
+                for col_name, value in zip(column_names, transaction):
+                    print(f"{col_name}: {value}")
+                print("-" * 20)
+        else:
+            print(f"No transactions found for account number {account_number}.")
+
+        # Close the connection
+        conn.close()
     else:
         print("Invalid bank account number. Please enter a 4-digit number.")
 
@@ -53,8 +71,26 @@ def search_by_date():
     """
     date_str = input("Enter the date (YYYY-MM-DD HH:MM:SS): ")
     if valid_date(date_str):
-        # Add logic to search transactions by date
-        print(f"Searching transactions for date: {date_str}")
+        # Connect to the SQLite database
+        conn = sqlite3.connect('personal_finance.db')
+        cursor = conn.cursor()
+
+        # Execute a query to search transactions by date
+        cursor.execute("SELECT * FROM transactions WHERE date=?", (date_str,))
+        transactions = cursor.fetchall()
+
+        if transactions:
+            print(f"Transactions for date {date_str}:")
+            column_names = [description[0] for description in cursor.description]
+            for transaction in transactions:
+                for col_name, value in zip(column_names, transaction):
+                    print(f"{col_name}: {value}")
+                print("-" * 20)
+        else:
+            print(f"No transactions found for date {date_str}.")
+
+        # Close the connection
+        conn.close()
     else:
         print("Invalid date format. Please enter the date in the format YYYY-MM-DD HH:MM:SS.")
 
@@ -63,22 +99,28 @@ def main():
     Main function that asks whether the user wants to search by account or date or show the list
     of transactions to view before deleting a transaction by its ID.
     """
-    search_by = input("Do you want to search by bank account or date? (account/date/show all): ")
-    if search_by.lower() == "account":
-        search_by_account()
-    elif search_by.lower() == "date":
-        search_by_date()
-    elif search_by.lower() == "show all":
-        show_transactions('personal_finance.db')
-    else:
-        print("Invalid search option. Please enter 'account' or 'date' or 'show all'.")
+    while True:
+        search_by = input("Do you want to search by source account id or date? (account/date/show all): ")
+        if search_by.lower() == "account":
+            search_by_account()
+            break
+        elif search_by.lower() == "date":
+            search_by_date()
+            break
+        elif search_by.lower() == "show all":
+            show_transactions('personal_finance.db')
+            break
+        else:
+            print("Invalid search option. Please enter 'account' or 'date' or 'show all'.")
 
-    transaction_id = input("Enter the transaction id to delete: ")
-    try:
-        transaction_id = int(transaction_id)
-        delete_transaction('personal_finance.db', transaction_id)
-    except ValueError:
-        print("Invalid transaction id. Please enter a numeric value.")
+    while True:
+        transaction_id = input("Enter the transaction id to delete: ")
+        try:
+            transaction_id = int(transaction_id)
+            delete_transaction('personal_finance.db', transaction_id)
+            break
+        except ValueError:
+            print("Invalid transaction id. Please enter a numeric value.")
 
 # Function to search for transaction in the personal finance database
 if __name__ == "__main__":
