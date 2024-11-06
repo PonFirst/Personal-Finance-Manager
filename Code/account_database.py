@@ -30,7 +30,7 @@ def clear_account_table():
     """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
-    cursor.execute("DELETE FROM Accounts IF EXISTS Accounts;")
+    cursor.execute("DROP TABLE IF EXISTS Accounts;")
     connection.commit()
     connection.close()
 
@@ -62,7 +62,7 @@ def clear_transactions_table():
     """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
-    cursor.execute("DELETE FROM Transactions IF EXISTS Transactions;")
+    cursor.execute("DROP TABLE IF EXISTS Transactions;")
     connection.commit()
     connection.close()
 
@@ -94,7 +94,7 @@ def clear_budget_table():
     """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
-    cursor.execute("DELETE FROM Budgets IF EXISTS Budgets;")
+    cursor.execute("DROP TABLE IF EXISTS Budgets;")
     connection.commit()
     connection.close()
 
