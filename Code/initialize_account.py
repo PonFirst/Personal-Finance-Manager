@@ -45,69 +45,72 @@ def upload_template():
     the template accounts from a CSV file.
     """
     filename = input("Enter the name of the file you want to use: ")
+    
+    if not filename.endswith(".csv"):
+        print("Error: The file must be in CSV format.")
+    else:
+        try:
+            with open(filename, "r", encoding="utf-8") as file:
+                reader = csv.reader(file)
+                header = next(reader)  # Read the header row
 
-    try:
-        with open(filename, "r", encoding="utf-8") as file:
-            reader = csv.reader(file)
-            header = next(reader)  # Read the header row
+                required_columns = ["Account_ID", "Name", "Category", "Balance"]
+                valid_columns = validate_header(header, required_columns)
 
-            required_columns = ["Account_ID", "Name", "Category", "Balance"]
-            valid_columns = validate_header(header, required_columns)
+                if not valid_columns:
+                    print("Errors in the file header prevent loading the template.")
+                    valid_columns = False
 
-            if not valid_columns:
-                print("Errors in the file header prevent loading the template.")
-                valid_columns = False
+                accounts = set()
+                all_rows_valid = True
 
-            accounts = set()
-            all_rows_valid = True
+                for row in reader:
+                    if len(row) < len(required_columns):
+                        print("Error: Missing values in a row.")
+                        all_rows_valid = False
+                        continue
 
-            for row in reader:
-                if len(row) < len(required_columns):
-                    print("Error: Missing values in a row.")
-                    all_rows_valid = False
-                    continue
+                    account_id, name, category, balance = row
 
-                account_id, name, category, balance = row
+                    # Validate Account ID format based on Category
+                    if not is_valid_account_id(account_id, category):
+                        print(f"Error: Account ID '{account_id}' is invalid for category '{category}'.")
+                        all_rows_valid = False
+                        continue
 
-                # Validate Account ID format based on Category
-                if not is_valid_account_id(account_id, category):
-                    print(f"Error: Account ID '{account_id}' is invalid for category '{category}'.")
-                    all_rows_valid = False
-                    continue
+                    # Check for duplicates
+                    if account_id in accounts:
+                        print(f"Error: Duplicate account ID '{account_id}' detected.")
+                        all_rows_valid = False
+                        continue
+                    accounts.add(account_id)
 
-                # Check for duplicates
-                if account_id in accounts:
-                    print(f"Error: Duplicate account ID '{account_id}' detected.")
-                    all_rows_valid = False
-                    continue
-                accounts.add(account_id)
+                    # Validate Balance is a valid number
+                    if not is_valid_balance(balance):
+                        print(f"Error: Balance '{balance}' must be a valid number.")
+                        all_rows_valid = False
+                        continue
 
-                # Validate Balance is a valid number
-                if not is_valid_balance(balance):
-                    print(f"Error: Balance '{balance}' must be a valid number.")
-                    all_rows_valid = False
-                    continue
+                if all_rows_valid:
+                    use_template(filename)
+                else:
+                    print("Errors in the file prevent loading the template.")
 
-            if all_rows_valid:
-                use_template(filename)
-            else:
-                print("Errors in the file prevent loading the template.")
-
-    except FileNotFoundError:
-        print(f"Error: File '{filename}' not found. Please check the file name and try again.")
+        except FileNotFoundError:
+            print(f"Error: File '{filename}' not found. Please check the file name and try again.")
 
 
 def validate_header(header, required_columns):
     """
-    Checks if the CSV file header matches the required columns.
+    This function checks if the CSV file header matches the required columns exactly.
     """
-    if len(header) < len(required_columns):
-        print("Error: Missing columns in the file header.")
+    if len(header) != len(required_columns):
+        print(f"Error: Expected {len(required_columns)} columns, but found {len(header)} columns.")
         return False
 
     for i, required_col in enumerate(required_columns):
-        if i < len(header) and header[i] != required_col:
-            print(f"Error: Column {i + 1} must be '{required_col}'.")
+        if header[i] != required_col:
+            print(f"Error: Column {i + 1} must be '{required_col}', found '{header[i]}' instead.")
             return False
     return True
 
@@ -136,3 +139,4 @@ def is_valid_balance(balance):
         return True
     except ValueError:
         return False
+
