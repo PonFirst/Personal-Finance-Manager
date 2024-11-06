@@ -8,11 +8,11 @@ Created by Copter
 import datetime
 import sqlite3
 
-def valid_id(bank_number):
+def valid_id(account_id):
     '''
     Function to check if the bank number is valid
     '''
-    return bank_number.isdigit() and len(bank_number) == 4
+    return account_id.isdigit() and len(account_id) == 4
 
 def valid_date(date_str):
     '''
@@ -34,8 +34,13 @@ def search_transaction():
     choice = input("Enter your choice (1 or 2): ")
 
     if choice == "1":
+<<<<<<< HEAD
+        account_id = input("Enter the bank number to search for: ")
+        if not valid_id(account_id):
+=======
         bank_number = input("Enter the source account id to search for: ")
         if not valid_id(bank_number):
+>>>>>>> a79d9cb1dfb87bf884626f5814427253c3cc9f1a
             print("Invalid bank number. Please enter a 4-digit number.")
             return
 
@@ -44,12 +49,23 @@ def search_transaction():
         query = (
             "SELECT * FROM Transactions WHERE source_account_id = ?"
         )
+<<<<<<< HEAD
+        cursor.execute(query, (account_id, account_id))
+=======
         cursor.execute(query, (bank_number,))
+>>>>>>> a79d9cb1dfb87bf884626f5814427253c3cc9f1a
         results = cursor.fetchall()
         column_names = [description[0] for description in cursor.description]
         connection.close()
 
         if not results:
+<<<<<<< HEAD
+            print(f"No transactions found for bank number {account_id}.")
+
+        print("Transactions found:")
+        for result in results:
+            print(result)
+=======
             print(f"No transactions found for bank number {bank_number}.")
         else:
             print("Transactions found:")
@@ -57,6 +73,7 @@ def search_transaction():
                 for col_name, value in zip(column_names, result):
                     print(f"{col_name}: {value}")
                 print()
+>>>>>>> a79d9cb1dfb87bf884626f5814427253c3cc9f1a
 
     elif choice == "2":
         while True:
