@@ -179,25 +179,27 @@ class Budget:
 
         # Retrieve budgeted amounts and linked accounts
         cursor.execute('''
-            SELECT Budgets.category, Budgets.budgeted_amount, Accounts.name AS account_name, Budgets.account_id
+            SELECT Budgets.category, Budgets.budgeted_amount, Budgets.account_id
             FROM Budgets
-            LEFT JOIN Accounts ON Budgets.account_id = Accounts.account_id
         ''')
         budgets = cursor.fetchall()
 
         print("Budget vs. Actual Expense Report:")
         for budget in budgets:
-            category, budgeted_amount, account_name, account_id = budget
+            category, budgeted_amount, account_id = budget
 
-            # Get the total actual expenses for this category
+            # Corrected query: Only track the expenses from the source_account_id
             cursor.execute('''
-                SELECT SUM(amount) FROM transactions 
-                WHERE source_account_id = ? AND description = ?
-            ''', (account_id, "Expense"))
+                SELECT SUM(amount) 
+                FROM Transactions 
+                WHERE source_account_id = ?
+            ''', (account_id,))
+            
             actual_expense = cursor.fetchone()[0] or 0
 
-            # Display the budget vs. actuals including account name
-            print(f"Category: {category:<20} Account: {account_name:<15} "
+            # Display the category, account_id, budgeted amount, actual expense, and difference
+            print(f"Category: {category:<20} "
+                f"Account ID: {account_id:<10} "
                 f"Budgeted: {budgeted_amount:<10.2f} "
                 f"Actual Expense: {actual_expense:<10.2f} "
                 f"Difference: {budgeted_amount - actual_expense:.2f}")
