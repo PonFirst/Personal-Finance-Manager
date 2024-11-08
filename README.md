@@ -13,4 +13,20 @@ Personal Finance Manager is an application designed to help users in Thailand tr
 
 ### Account Management
 
--
+- Add account
+- Delete account
+- Show account balance by ID, name, or show all balances
+
+### Transaction Management
+
+- Add transaction
+- Search transaction by account id or date
+- Delete transaction
+- View all transactions
+
+### Budget Management
+
+- Add budget
+- Modify budget
+- Delete budget
+- View Budget Report
