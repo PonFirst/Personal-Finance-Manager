@@ -107,4 +107,4 @@ def search_by_date():
         # Close the connection
         conn.close()
     else:
-        print("Invalid date format. Please enter the date in the format YYYY-MM-DD HH:MM:SS.")
+        print("Invalid date format. Please enter the date in the format YYYY-MM-DD")
