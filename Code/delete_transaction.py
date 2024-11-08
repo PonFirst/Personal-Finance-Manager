@@ -11,37 +11,13 @@ from add_transaction import valid_bank_num, valid_date
 from show_transaction import show_transactions
 
 # Function to delete transaction from the database
-def delete_transaction(transaction_id):
+def delete_transaction():
     """
     Delete a transaction from the database by its ID.
     """
-    try:
-        # Connect to the SQLite database
-        conn = sqlite3.connect('personal_finance.db')
-        cursor = conn.cursor()
-
-        # Execute a query to delete a transaction by id
-        cursor.execute("DELETE FROM transactions WHERE transaction_id=?", (transaction_id,))
-        if cursor.rowcount == 0:
-            print(f"No transaction found with id {transaction_id}.")
-            return
-
-        # Commit the transaction
-        conn.commit()
-        print(f"Transaction with id {transaction_id} deleted successfully.")
-
-        # Close the connection
-        conn.close()
-
-    except sqlite3.OperationalError as error:
-        print(f"An error occurred: {error}")
-
-# Add the function call to delete_transaction
-def main():
-    """
-    Main function that asks whether the user wants to search by account or date or show the list
-    of transactions to view before deleting a transaction by its ID.
-    """
+    conn = sqlite3.connect('personal_finance.db')
+    cursor = conn.cursor()
+    
     while True:
         search_by = input("Do you want to search by source account id or date? (account/date/show all): ")
         if search_by.lower() == "account":
@@ -60,10 +36,19 @@ def main():
         transaction_id = input("Enter the transaction id to delete: ")
         try:
             transaction_id = int(transaction_id)
-            delete_transaction(transaction_id)
-            break
+            # Execute a query to delete a transaction by id
+            cursor.execute("DELETE FROM transactions WHERE transaction_id=?", (transaction_id,))
+            if cursor.rowcount == 0:
+                print(f"No transaction found with id {transaction_id}.")
+            else:
+                conn.commit()
+                print(f"Transaction with id {transaction_id} deleted successfully.")
+                break
         except ValueError:
             print("Invalid transaction id. Please enter a numeric value.")
+
+    # Close the connection
+    conn.close()
 
 
 def search_by_account():
@@ -123,6 +108,3 @@ def search_by_date():
         conn.close()
     else:
         print("Invalid date format. Please enter the date in the format YYYY-MM-DD HH:MM:SS.")
-
-if __name__ == "__main__":
-    main()
