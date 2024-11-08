@@ -39,6 +39,27 @@ def id_check(source_account_id, destination_account_id):
     """
     return source_account_id == destination_account_id
 
+def account_check(account_id):
+    """
+    Function to check if the account exists in the database
+    """
+    conn = sqlite3.connect('personal_finance.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT account_type FROM Accounts WHERE account_id = ?", (account_id,))
+    result = cursor.fetchone()
+    conn.close()
+    return result[0] if result else None
+
+def type_allow(source_account_type, destination_account_type):
+    """
+    Function to check if the transaction between account types is allowed
+    """
+    allowed_types = {
+        "savings": ["savings", "checking"],
+        "checking": ["savings", "checking"]
+    }
+    return destination_account_type in allowed_types.get(source_account_type, [])
+
 def add_transaction():
     '''
     Function to add a transaction to the database
@@ -47,15 +68,23 @@ def add_transaction():
     while True:
         source_account_id = input("Enter source account id (4 digits): ")
         if valid_bank_num(source_account_id):
-            break
-
-        print("Invalid account id. Please enter a 4-digit number.")
+            source_account_type = account_check(source_account_id)
+            if source_account_type:
+                break
+        print("Invalid account id or account does not exist. Please enter a valid 4-digit number.")
 
     while True:
         destination_account_id = input("Enter destination account id (4 digits): ")
         if valid_bank_num(destination_account_id):
             if not id_check(source_account_id, destination_account_id):
-                break
+                destination_account_type = account_check(destination_account_id)
+                if destination_account_type:
+                    if type_allow(source_account_type, destination_account_type):
+                        break
+                    else:
+                        print(f"Transaction from {source_account_type} to {destination_account_type} is not allowed.")
+                else:
+                    print("Destination account does not exist.")
             else:
                 print("Source account id and destination account id cannot be the same.")
         else:
