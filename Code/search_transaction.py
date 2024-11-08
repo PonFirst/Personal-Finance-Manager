@@ -19,7 +19,7 @@ def valid_date(date_str):
     Function to check if the date is valid
     '''
     try:
-        datetime.datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+        datetime.datetime.strptime(date_str, "%Y-%m-%d")
         return True
     except ValueError:
         return False
@@ -58,14 +58,14 @@ def search_transaction():
 
     elif choice == "2":
         while True:
-            date_str = input("Enter the date to search for (format: YYYY-MM-DD HH:MM:SS): ")
+            date_str = input("Enter the date to search for (format: YYYY-MM-DD): ")
             if valid_date(date_str):
                 break
-            print("Invalid date format. Please re-enter (YYYY-MM-DD HH:MM:SS).")
+            print("Invalid date format. Please re-enter (YYYY-MM-DD).")
 
         connection = sqlite3.connect("personal_finance.db")
         cursor = connection.cursor()
-        cursor.execute("SELECT * FROM Transactions WHERE date = ?", (date_str,))
+        cursor.execute("SELECT * FROM Transactions WHERE date(date) = date(?)", (date_str,))
         results = cursor.fetchall()
         column_names = [description[0] for description in cursor.description]
         connection.close()
