@@ -45,7 +45,7 @@ def account_check(account_id):
     """
     conn = sqlite3.connect('personal_finance.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT account_type FROM Accounts WHERE account_id = ?", (account_id,))
+    cursor.execute("SELECT category FROM Accounts WHERE account_id = ?", (account_id,))
     result = cursor.fetchone()
     conn.close()
     return result[0] if result else None
@@ -54,13 +54,13 @@ def type_allow(source_account_type, destination_account_type):
     """
     Function to check if the transaction between account types is allowed
     """
-    allowed_types = {
+    allowed_category = {
         "Expense": ["asset", "Liability"],
         "Asset": ["Expense", "Liability"],
         "Income" : ["Asset", "liability"],
         "liability" : ["Asset"],
     }
-    return destination_account_type in allowed_types.get(source_account_type, [])
+    return destination_account_type in allowed_category.get(source_account_type, [])
 
 def add_transaction():
     '''
