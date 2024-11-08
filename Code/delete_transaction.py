@@ -121,7 +121,6 @@ def main():
             break
         except ValueError:
             print("Invalid transaction id. Please enter a numeric value.")
-
-# Function to search for transaction in the personal finance database
+            
 if __name__ == "__main__":
     main()

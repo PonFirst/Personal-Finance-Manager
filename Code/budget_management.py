@@ -70,8 +70,8 @@ class Budget:
 
                 # Insert the new budget
                 cursor.execute(
-                    "INSERT INTO Budgets (category, budgeted_amount, account_id) VALUES (?, ?, ?)",
-                    (category, amount, account_id)
+                    "INSERT INTO Budgets (category, budgeted_amount, account_id, actual_expense) VALUES (?, ?, ?, ?)",
+                    (category, amount, account_id, 0.0)
                 )
                 print(f"Budget for '{category}' added with amount: {amount:.2f} linked to account '{account_id}'.")
                 break  # Exit after successful addition
@@ -177,27 +177,35 @@ class Budget:
         connection = self._connect()
         cursor = connection.cursor()
 
-        # Retrieve budgeted amounts and linked accounts
         cursor.execute('''
-            SELECT Budgets.category, Budgets.budgeted_amount, Accounts.name AS account_name, Budgets.account_id
+            SELECT budget_id, category, budgeted_amount, account_id, actual_expense
             FROM Budgets
-            LEFT JOIN Accounts ON Budgets.account_id = Accounts.account_id
         ''')
         budgets = cursor.fetchall()
 
         print("Budget vs. Actual Expense Report:")
         for budget in budgets:
-            category, budgeted_amount, account_name, account_id = budget
+            budget_id, category, budgeted_amount, account_id, current_actual_expense = budget
 
-            # Get the total actual expenses for this category
             cursor.execute('''
-                SELECT SUM(amount) FROM transactions 
-                WHERE source_account_id = ? AND description = ?
-            ''', (account_id, "Expense"))
+                SELECT SUM(amount) 
+                FROM Transactions 
+                WHERE source_account_id = ?
+            ''', (account_id,))
+            
             actual_expense = cursor.fetchone()[0] or 0
+            
+            # Update the actual_expense in the Budgets table
+            if current_actual_expense != actual_expense:
+                cursor.execute('''
+                    UPDATE Budgets 
+                    SET actual_expense = ? 
+                    WHERE budget_id = ?
+                ''', (actual_expense, budget_id))
 
-            # Display the budget vs. actuals including account name
-            print(f"Category: {category:<20} Account: {account_name:<15} "
+            # Display the budget table
+            print(f"Category: {category:<20} "
+                f"Account ID: {account_id:<10} "
                 f"Budgeted: {budgeted_amount:<10.2f} "
                 f"Actual Expense: {actual_expense:<10.2f} "
                 f"Difference: {budgeted_amount - actual_expense:.2f}")
