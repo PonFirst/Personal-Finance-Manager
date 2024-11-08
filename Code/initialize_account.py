@@ -5,6 +5,7 @@ Created by Pon (First) Yimcharoen
 """
 
 import csv
+import sqlite3
 import account_database
 from account import Account
 
@@ -62,6 +63,7 @@ def upload_template():
                     valid_columns = False
 
                 accounts = set()
+                processed_names = set()
                 all_rows_valid = True
 
                 for row in reader:
@@ -84,6 +86,13 @@ def upload_template():
                         all_rows_valid = False
                         continue
                     accounts.add(account_id)
+                    
+                    # Check for unique name
+                    if not is_unique_name(name, processed_names):
+                        print(f"Error: Name '{name}' is either not unique or is blank.")
+                        all_rows_valid = False
+                        continue
+                    processed_names.add(name)
 
                     # Validate Balance is a valid number
                     if not is_valid_balance(balance):
@@ -112,6 +121,23 @@ def validate_header(header, required_columns):
         if header[i] != required_col:
             print(f"Error: Column {i + 1} must be '{required_col}', found '{header[i]}' instead.")
             return False
+    return True
+
+
+def is_unique_name(name, processed_names):
+    """
+    Check if the given name is unique in the current CSV file data (processed_names).
+    """
+    # Check if the name is blank or empty
+    if not name.strip():
+        print("Name is blank or empty.")
+        return False
+
+    # Check if the name already exists in the processed names
+    if name in processed_names:
+        print(f"Error: Name '{name}' is not unique.")
+        return False
+
     return True
 
 

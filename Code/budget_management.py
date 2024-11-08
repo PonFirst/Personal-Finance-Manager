@@ -141,7 +141,6 @@ class Budget:
         connection.close()
 
 
-
     def delete_budget(self):
         """
         This function is use to delete a budget.
