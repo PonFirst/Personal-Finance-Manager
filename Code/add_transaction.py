@@ -55,8 +55,10 @@ def type_allow(source_account_type, destination_account_type):
     Function to check if the transaction between account types is allowed
     """
     allowed_types = {
-        "savings": ["savings", "checking"],
-        "checking": ["savings", "checking"]
+        "Expense": ["asset", "Liability"],
+        "Asset": ["Expense", "Liability"]
+        "Income" : ["Asset", "liability"],
+        "liability" : ["Asset"],
     }
     return destination_account_type in allowed_types.get(source_account_type, [])
 
