@@ -78,8 +78,9 @@ def create_budget_table():
         CREATE TABLE IF NOT EXISTS Budgets (
             budget_id INTEGER PRIMARY KEY,
             category VARCHAR(64) NOT NULL,
-            budgeted_amount FLOAT NOT NULL,
             account_id INTEGER,
+            budgeted_amount FLOAT NOT NULL,
+            actual_expense FLOAT NOT NULL DEFAULT 0.0,
             FOREIGN KEY (account_id) REFERENCES Accounts(account_id)
         );
     ''')
