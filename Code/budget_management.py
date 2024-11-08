@@ -70,8 +70,8 @@ class Budget:
 
                 # Insert the new budget
                 cursor.execute(
-                    "INSERT INTO Budgets (category, budgeted_amount, account_id) VALUES (?, ?, ?)",
-                    (category, amount, account_id)
+                    "INSERT INTO Budgets (category, budgeted_amount, account_id, actual_expense) VALUES (?, ?, ?, ?)",
+                    (category, amount, account_id, 0.0)
                 )
                 print(f"Budget for '{category}' added with amount: {amount:.2f} linked to account '{account_id}'.")
                 break  # Exit after successful addition
@@ -177,18 +177,16 @@ class Budget:
         connection = self._connect()
         cursor = connection.cursor()
 
-        # Retrieve budgeted amounts and linked accounts
         cursor.execute('''
-            SELECT Budgets.category, Budgets.budgeted_amount, Budgets.account_id
+            SELECT budget_id, category, budgeted_amount, account_id, actual_expense
             FROM Budgets
         ''')
         budgets = cursor.fetchall()
 
         print("Budget vs. Actual Expense Report:")
         for budget in budgets:
-            category, budgeted_amount, account_id = budget
+            budget_id, category, budgeted_amount, account_id, current_actual_expense = budget
 
-            # Corrected query: Only track the expenses from the source_account_id
             cursor.execute('''
                 SELECT SUM(amount) 
                 FROM Transactions 
@@ -196,8 +194,16 @@ class Budget:
             ''', (account_id,))
             
             actual_expense = cursor.fetchone()[0] or 0
+            
+            # Update the actual_expense in the Budgets table
+            if current_actual_expense != actual_expense:
+                cursor.execute('''
+                    UPDATE Budgets 
+                    SET actual_expense = ? 
+                    WHERE budget_id = ?
+                ''', (actual_expense, budget_id))
 
-            # Display the category, account_id, budgeted amount, actual expense, and difference
+            # Display the budget table
             print(f"Category: {category:<20} "
                 f"Account ID: {account_id:<10} "
                 f"Budgeted: {budgeted_amount:<10.2f} "
