@@ -13,18 +13,41 @@ If the data is invalid, the program will raise an error message and ask user to 
 Created by Baipor.
 """
 
+"""
+add_account.py
+Function for personal finance manager to add new account to database
+Add Account Create a new account that contains, Account type, Account name, Account ID
+and account balance. The program will generate four digit account ID based on user account type.
+
+For example : Income account will have ID starting with 1, the account ID is 1001 and 
+if there are more this type of account the next account ID will be 1002 and so on
+The program will validate the account type, account name, account ID, and account balance. 
+If the data is valid, the program will add the account to the database. 
+If the data is invalid, the program will raise an error message and ask user to reinput data
+
+Created by Baipor.
+"""
+
 import sqlite3
 from account import Account
+
+class ExitInput(Exception):
+    """Custom exception to handle user exit during input"""
+    pass
 
 def validate_account_type(account_type):
     """
     function to validate account type
     """
-    valid_types = ["Income", "Expense", "Asset", "Liability"]
-    account_type = account_type.title()
+    valid_types = {
+        "1": "Income",
+        "2": "Expense",
+        "3": "Asset",
+        "4": "Liability"
+    }
     if account_type not in valid_types:
         raise ValueError("Invalid account type.")
-    return account_type
+    return valid_types[account_type]
 
 def validate_account_name(account_name):
     """
@@ -92,8 +115,10 @@ def get_valid_input(prompt, validation_func):
     function to get valid input
     """
     while True:
+        user_input = input(prompt)
+        if user_input == 'exit':
+            raise ExitInput("Cancel adding account...")
         try:
-            user_input = input(prompt)
             return validation_func(user_input)
         except ValueError as e:
             print(f"Error: {e} Please try again.")
@@ -105,19 +130,19 @@ def add_account():
     try:
         # Get account type with validation
         account_type = get_valid_input(
-            "Enter account type (Income, Expense, Asset, Liability): ",
+            "Enter account type (1: Income, 2: Expense, 3: Asset, 4: Liability) or 'exit' to exit: ",
             validate_account_type
         )
 
         # Get account name with validation and uniqueness check
         account_name = get_valid_input(
-            "Enter account name: ",
+            "Enter account name or type 'exit' to exit: ",
             lambda name: is_account_name_unique(validate_account_name(name))
         )
 
         # Get balance with validation
         balance = get_valid_input(
-            "Enter amount of balance: ",
+            "Enter amount of balance or type 'exit' to exit: ",
             validate_amount
         )
 
@@ -143,12 +168,13 @@ def add_account():
         print(f"Account ID: {account_id}")
         print(f"Account Name: {account_name}")
         print(f"Account Type: {account_type}")
-        print(f"Balance: ${balance:,.2f}")
+        print(f"Balance: {balance:,.2f} Baht")
 
+    except ExitInput as e:
+        print(e)
+        print("Account creation canceled.")
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
-        return None
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-        return None
 
