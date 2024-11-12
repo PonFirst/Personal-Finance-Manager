@@ -182,32 +182,35 @@ class Budget:
         ''')
         budgets = cursor.fetchall()
 
-        print("Budget vs. Actual Expense Report:")
-        for budget in budgets:
-            budget_id, category, budgeted_amount, account_id, current_actual_expense = budget
+        if not budgets:  # If the budgets list is empty
+            print("No Budget")
+        else:
+            print("Budget vs. Actual Expense Report:")
+            for budget in budgets:
+                budget_id, category, budgeted_amount, account_id, current_actual_expense = budget
 
-            cursor.execute('''
-                SELECT SUM(amount) 
-                FROM Transactions 
-                WHERE source_account_id = ?
-            ''', (account_id,))
-            
-            actual_expense = cursor.fetchone()[0] or 0
-            
-            # Update the actual_expense in the Budgets table
-            if current_actual_expense != actual_expense:
                 cursor.execute('''
-                    UPDATE Budgets 
-                    SET actual_expense = ? 
-                    WHERE budget_id = ?
-                ''', (actual_expense, budget_id))
+                    SELECT SUM(amount) 
+                    FROM Transactions 
+                    WHERE source_account_id = ?
+                ''', (account_id,))
+                
+                actual_expense = cursor.fetchone()[0] or 0
+                
+                # Update the actual_expense in the Budgets table
+                if current_actual_expense != actual_expense:
+                    cursor.execute('''
+                        UPDATE Budgets 
+                        SET actual_expense = ? 
+                        WHERE budget_id = ?
+                    ''', (actual_expense, budget_id))
 
-            # Display the budget table
-            print(f"Category: {category:<20} "
-                f"Account ID: {account_id:<10} "
-                f"Budgeted: {budgeted_amount:<10.2f} "
-                f"Actual Expense: {actual_expense:<10.2f} "
-                f"Difference: {budgeted_amount - actual_expense:.2f}")
+                # Display the budget table
+                print(f"Category: {category:<20} "
+                    f"Account ID: {account_id:<10} "
+                    f"Budgeted: {budgeted_amount:<10.2f} "
+                    f"Actual Expense: {actual_expense:<10.2f} "
+                    f"Difference: {budgeted_amount - actual_expense:.2f}")
 
         connection.commit()
         connection.close()
