@@ -76,21 +76,30 @@ def account_management():
     print("1. Add account")
     print("2. Delete account")
     print("3. Show account balance")
+    print("4. Exit")
 
-    try:
-        choice = int(input("Choose a option: "))
-        if choice == 1:
-            account_database.create_account_table()
-            add_account.add_account()
-        elif choice == 2:
-            delete_account_2.delete_account() # delete if there no transaction and budget
-            #delete_account.delete_account() # delete assosiated transaction and budget
-        elif choice == 3:
-            show_account_balance.show_balance()
-        else:
+    while True:
+
+        try:
+            choice = int(input("Choose a option: "))
+            if choice == 1:
+                account_database.create_account_table()
+                add_account.add_account()
+                break
+            elif choice == 2:
+                delete_account_2.delete_account() # delete if there no transaction and budget
+                #delete_account.delete_account() # delete assosiated transaction and budget
+                break
+            elif choice == 3:
+                show_account_balance.show_balance()
+                break
+            elif choice == 4:
+                break
+            else:
+                print("Invalid Choice!")
+
+        except ValueError:
             print("Invalid Choice!")
-    except ValueError:
-        print("Invalid Choice!")
 
 
 def transaction_management():
