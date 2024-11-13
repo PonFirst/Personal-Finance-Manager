@@ -2,7 +2,7 @@
 This module is use for displaying the user dashboard and getting
 user inputs to call functions like initialize account chart,
 account management, transaction management, and budget management.
-
+Created and managed by everyone
 """
 
 import initialize_account as init_acc
@@ -17,10 +17,8 @@ import show_account_balance
 import account_database
 
 
+# This function is use to display the dashboard.
 def display_dashboard():
-    """
-    This function is use to display the dashboard.
-    """
     while True:
         print("----User Dashboard----")
         print("1. Initialize account chart")
@@ -46,19 +44,15 @@ def display_dashboard():
         except ValueError:
             print("Invalid Choice!\n")
 
-
+# This function allow the user to choose to initialize
+# account by using template or their own.
 def initialize_account_chart():
-    """
-    This function allow the user to choose to initialize
-    account by using template or their own.
-    """
-    
     while True:
         print("1. Use Template")
         print("2. Upload A Template")
         print("3. Exit")
         try:
-            choice = int(input("Choose a option: "))
+            choice = int(input("Choose an option: "))
             if choice == 1:
                 init_acc.use_template("Finance Template.csv")
                 break
@@ -74,20 +68,15 @@ def initialize_account_chart():
             print("Invalid Choice!")
 
 
+# This function allow the user to choose to add, delete, or show account balance.
 def account_management():
-    """
-    This function allow the user to choose to
-    add, delete, or show account balance.
-    """
-    print("1. Add account")
-    print("2. Delete account")
-    print("3. Show account balance")
-    print("4. Exit")
-
     while True:
-
+        print("1. Add account")
+        print("2. Delete account")
+        print("3. Show account balance")
+        print("4. Exit")
         try:
-            choice = int(input("Choose a option: "))
+            choice = int(input("Choose an option: "))
             if choice == 1:
                 account_database.create_account_table()
                 add_account.add_account()
@@ -107,6 +96,7 @@ def account_management():
             print("Invalid Choice!")
 
 
+# This function allow the user to choose to add, search, delete, or view transaction.
 def transaction_management():
     while True:
         print("1. Add Transaction")
@@ -115,7 +105,7 @@ def transaction_management():
         print("4. View Transaction")
         print("5. Exit")
         try:
-            choice = int(input("Choose a option: "))
+            choice = int(input("Choose an option: "))
             if choice == 1:
                 add_transaction.add_transaction()
                 break
@@ -137,12 +127,9 @@ def transaction_management():
             print("Invalid Choice!")
 
 
+# This function allow the user to choose to add budget, delete budget,
+# modify budget or view budget report.
 def budget_interface():
-    """
-    This function allow the user to choose to
-    add budget, delete budget, modify budget 
-    or view budget report.
-    """
     budget = Budget()
     
     while True:
@@ -152,7 +139,7 @@ def budget_interface():
         print("4. View Budget Report")
         print("5. Exit")
         try:
-            choice = int(input("Choose a option: "))
+            choice = int(input("Choose an option: "))
             if choice == 1:
                 budget.add_budget()
                 break

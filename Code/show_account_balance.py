@@ -19,8 +19,11 @@ def display_all_accounts(connection):
     cursor = connection.cursor()
     cursor.execute("SELECT account_id, name, balance FROM Accounts")
     accounts = cursor.fetchall()
-    for account in accounts:
-        print(f"Account ID: {account[0]}, Account Name: {account[1]}, Balance: {account[2]}\n")
+    if not accounts:
+        print("\nThere are no accounts in the database.\n")
+    else:
+        for account in accounts:
+            print(f"Account ID: {account[0]}, Account Name: {account[1]}, Balance: {account[2]}\n")
 
 # Function to display balance of selected account by ID
 def display_selected_account_by_id(connection, account_id):

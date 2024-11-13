@@ -6,24 +6,17 @@ Created by Pon (First) Yimcharoen
 
 import sqlite3
 
+# This class manages budget functionalities including adding, modifying,
+# deleting, and printing budget reports.
 class Budget:
-    """
-    This class manages budget functionalities including adding, modifying, 
-    deleting, and printing budget reports.
-    
-    Created by Pon (First) Yimcharoen
-    """
-
     def __init__(self, db_name="personal_finance.db"):
         self.db_name = db_name
 
     def _connect(self):
         return sqlite3.connect(self.db_name)
 
+    # This function asks the user to enter a valid category name.
     def get_valid_category(self, prompt):
-        """
-        This function asks the user to enter a valid category name.
-        """
         while True:
             new_category = input(prompt).strip()
             if not new_category:
@@ -31,10 +24,8 @@ class Budget:
             else:
                 return new_category
 
+    # This function is used to add a budget with specified category, amount, and account ID.
     def add_budget(self):
-        """
-        This function is used to add a budget with specified category, amount, and account ID.
-        """
         connection = self._connect()
         cursor = connection.cursor()
 
@@ -82,11 +73,8 @@ class Budget:
         connection.commit()
         connection.close()
 
-
+    # This function is use to modify an existing budget's amount or linked account.
     def modify_budget(self):
-        """
-        This function is use to modify an existing budget's amount or linked account.
-        """
         connection = self._connect()
         cursor = connection.cursor()
 
@@ -140,11 +128,8 @@ class Budget:
         connection.commit()
         connection.close()
 
-
+    # This function is use to delete a budget.
     def delete_budget(self):
-        """
-        This function is use to delete a budget.
-        """
         connection = self._connect()
         cursor = connection.cursor()
 
@@ -168,11 +153,8 @@ class Budget:
         connection.commit()
         connection.close()
 
-
+    # This function generates a report comparing actual expenses with the budgeted amounts.
     def create_budget_report(self):
-        """
-        This function generates a report comparing actual expenses with the budgeted amounts.
-        """
         connection = self._connect()
         cursor = connection.cursor()
 

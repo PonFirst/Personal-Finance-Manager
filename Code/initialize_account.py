@@ -9,11 +9,8 @@ import account_database
 from account import Account
 
 
+# This function is use to initialize the account database with the template accounts.
 def use_template(csv_file):
-    """
-    This function is use to initialize the account database with
-    the template accounts.
-    """
     account_database.clear_account_table()
     account_database.clear_transactions_table()
     account_database.clear_budget_table()
@@ -39,20 +36,17 @@ def use_template(csv_file):
     print(f"Accounts from {csv_file} have been successfully loaded into the database.")
 
 
+# This function initializes the account database with 
+# the template accounts from a CSV file.
 def upload_template():
-    """
-    This function initializes the account database with
-    the template accounts from a CSV file.
-    """
     filename = input("Enter the name of the file you want to use: ")
-
     if not filename.endswith(".csv"):
         print("Error: The file must be in CSV format.")
     else:
         try:
             with open(filename, "r", encoding="utf-8") as file:
                 reader = csv.reader(file)
-                header = next(reader)  # Read the header row
+                header = next(reader)
 
                 required_columns = ["Account_ID", "Name", "Category", "Balance"]
                 valid_columns = validate_header(header, required_columns)
@@ -73,27 +67,25 @@ def upload_template():
 
                     account_id, name, category, balance = row
 
-                    # Validate Account ID format based on Category
+                    # Validate each row by checking Account ID format based on category, 
+                    # duplicate Account IDs, unique names, and correct balance format.
                     if not is_valid_account_id(account_id, category):
                         print(f"Error: Account ID '{account_id}' is invalid for category '{category}'.")
                         all_rows_valid = False
                         continue
 
-                    # Check for duplicates
                     if account_id in accounts:
                         print(f"Error: Duplicate account ID '{account_id}' detected.")
                         all_rows_valid = False
                         continue
                     accounts.add(account_id)
 
-                    # Check for unique name
                     if not is_unique_name(name, processed_names):
                         print(f"Error: Name '{name}' is either not unique or is blank.")
                         all_rows_valid = False
                         continue
                     processed_names.add(name)
 
-                    # Validate Balance is a valid number
                     if not is_valid_balance(balance):
                         print(f"Error: Balance '{balance}' must be a valid number.")
                         all_rows_valid = False
@@ -108,10 +100,8 @@ def upload_template():
             print(f"Error: File '{filename}' not found. Please check the file name and try again.")
 
 
+# This function checks if the CSV file header matches the required columns exactly.
 def validate_header(header, required_columns):
-    """
-    This function checks if the CSV file header matches the required columns exactly.
-    """
     if len(header) != len(required_columns):
         print(f"Error: Expected {len(required_columns)} columns, but found {len(header)} columns.")
         return False
@@ -123,10 +113,8 @@ def validate_header(header, required_columns):
     return True
 
 
+# This function check if the given name is unique in the current CSV file data.
 def is_unique_name(name, processed_names):
-    """
-    Check if the given name is unique in the current CSV file data (processed_names).
-    """
     # Check if the name is blank or empty
     if not name.strip():
         print("Name is blank or empty.")
@@ -140,10 +128,8 @@ def is_unique_name(name, processed_names):
     return True
 
 
+# This function validates the account ID based on the category.
 def is_valid_account_id(account_id, category):
-    """
-    Validate the account ID based on the category.
-    """
     if category == "Income" and account_id.startswith('1'):
         return True
     elif category == "Expense" and account_id.startswith('2'):
@@ -155,10 +141,8 @@ def is_valid_account_id(account_id, category):
     return False
 
 
+# This function check if the balance is a valid number.
 def is_valid_balance(balance):
-    """
-    Validate that the balance is a valid number.
-    """
     try:
         float(balance)
         return True
