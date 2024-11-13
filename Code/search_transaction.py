@@ -31,10 +31,14 @@ def search_transaction():
     print("How would you like to search for the transaction?")
     print("1. By Bank Number")
     print("2. By Date")
-    choice = input("Enter your choice (1 or 2): ")
+    print("3. Cancel")
+    choice = input("Enter your choice (1, 2, or 3): ")
 
-    if choice == "1":
-        account_id = input("Enter the source account id to search for: ")
+    if choice == "1":       # Search by bank number
+        account_id = input("Enter the source account id to search for (or type 'cancel' to exit): ")
+        if account_id.lower() == 'cancel':
+            print("Operation cancelled.")
+            return
         if not valid_id(account_id):
             print("Invalid bank number. Please enter a 4-digit number.")
             return
@@ -56,9 +60,12 @@ def search_transaction():
         for result in results:
             print(result)
 
-    elif choice == "2":
+    elif choice == "2":     # Search by date
         while True:
-            date_str = input("Enter the date to search for (format: YYYY-MM-DD): ")
+            date_str = input("Enter the date to search for (format: YYYY-MM-DD) (or type 'cancel' to exit): ")
+            if date_str.lower() == 'cancel':
+                print("Operation cancelled.")
+                return
             if valid_date(date_str):
                 break
             print("Invalid date format. Please re-enter (YYYY-MM-DD).")
@@ -79,5 +86,7 @@ def search_transaction():
                     print(f"{col_name}: {value}")
                 print()
 
+    elif choice == "3":
+        print("Operation cancelled.")
     else:
-        print("Invalid choice. Please enter 1 or 2.")
+        print("Invalid choice. Please enter 1, 2, or 3.")
