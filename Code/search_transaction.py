@@ -34,7 +34,7 @@ def search_transaction():
     print("3. Cancel")
     choice = input("Enter your choice (1, 2, or 3): ")
 
-    if choice == "1":
+    if choice == "1":       # Search by bank number
         account_id = input("Enter the source account id to search for (or type 'cancel' to exit): ")
         if account_id.lower() == 'cancel':
             print("Operation cancelled.")
@@ -60,7 +60,7 @@ def search_transaction():
         for result in results:
             print(result)
 
-    elif choice == "2":
+    elif choice == "2":     # Search by date
         while True:
             date_str = input("Enter the date to search for (format: YYYY-MM-DD) (or type 'cancel' to exit): ")
             if date_str.lower() == 'cancel':

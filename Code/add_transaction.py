@@ -67,7 +67,7 @@ def add_transaction():
     Function to add a transaction to the database
     '''
 
-    while True:
+    while True:     # Loop until a valid source account id is entered
         source_account_id = input("Enter source account id (4 digits) or 'C' to cancel: ")
         if source_account_id.upper() == 'C':
             print("Transaction cancelled.")
@@ -78,7 +78,7 @@ def add_transaction():
                 break
         print("Invalid account id or account does not exist. Please enter a valid 4-digit number.")
 
-    while True:
+    while True:     # Loop until a valid destination account id is entered
         destination_account_id = input("Enter destination account id (4 digits) or 'C' to cancel: ")
         if destination_account_id.upper() == 'C':
             print("Transaction cancelled.")
@@ -98,7 +98,7 @@ def add_transaction():
         else:
             print("Invalid account id. Please enter a 4-digit number.")
 
-    while True:
+    while True:     # Loop until a valid amount is entered
         amount = input("Enter the transaction amount or 'C' to cancel: ")
         if amount.upper() == 'C':
             print("Transaction cancelled.")
@@ -114,7 +114,7 @@ def add_transaction():
         print("Transaction cancelled.")
         return
 
-    while True:
+    while True:     # Loop until a valid date is entered
         transaction_date = input("Enter transaction date (format: YYYY-MM-DD) or 'C' to cancel: ")
         if transaction_date.upper() == 'C':
             print("Transaction cancelled.")
@@ -124,7 +124,7 @@ def add_transaction():
 
         print("Invalid date format. Please enter a valid date (YYYY-MM-DD).")
 
-    transaction = {
+    transaction = {     # Create a dictionary to store the transaction details
         "source_account_id": source_account_id,
         "destination_account_id": destination_account_id,
         "amount": amount,
@@ -132,6 +132,7 @@ def add_transaction():
         "date": transaction_date,
     }
 
+    # Ensure the user
     print("Want to record the following transaction? :")
     print(f"Source account id: {transaction['source_account_id']}")
     print(f"Destination account id: {transaction['destination_account_id']}")
@@ -145,9 +146,11 @@ def add_transaction():
 
     print("Transaction confirmed.")
 
-    conn = sqlite3.connect('personal_finance.db')
+    # Connect to the SQLite database
+    conn = sqlite3.connect('personal_finance.db')       
     cursor = conn.cursor()
     
+    # Execute a query to insert the transaction into the database
     cursor.execute('''
             INSERT INTO Transactions (source_account_id, destination_account_id, amount, description, date)
             VALUES (?, ?, ?, ?, ?)

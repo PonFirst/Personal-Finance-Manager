@@ -101,10 +101,12 @@ def search_by_date():
     Search transactions by date.
     """
     date_str = input("Enter the date (YYYY-MM-DD HH:MM:SS) or type 'cancel' to exit: ")
+    
     if date_str.lower() == 'cancel':
         print("Operation cancelled.")
         return True
-    if valid_date(date_str):
+    
+    if valid_date(date_str):        
         # Connect to the SQLite database
         conn = sqlite3.connect('personal_finance.db')
         cursor = conn.cursor()
