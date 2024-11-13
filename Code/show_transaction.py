@@ -21,7 +21,7 @@ def show_transactions():
 
         # Get column names from the cursor description
         column_names = [description[0] for description in cursor.description]
-        print(f"{' | '.join(column_names)}")  # Print the header
+        # print(f"{' | '.join(column_names)}")  
         print('-' * 50)  # Print a line
 
         # Print each row with column names
