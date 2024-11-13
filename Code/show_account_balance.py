@@ -1,32 +1,30 @@
 """
 show_account_balance.py 
-Program to show the account balance that lets the user choose 
-to display all accounts or a selected account, which is kept in the personal_finance.db database.
+Program to show the account balance that ask user choice to show balance 
+of all account, or selected account which can show by account ID or account name.
+
 Create by Baipor.
 """
 
 import sqlite3
 
+# Function to connect to the database
 def connect_db():
-    """
-    Function to connect to the database
-    """
+   
     return sqlite3.connect('personal_finance.db')
 
+# Function to display all account balances
 def display_all_accounts(connection):
-    """
-    Display all account balances.
-    """
+    
     cursor = connection.cursor()
     cursor.execute("SELECT account_id, name, balance FROM Accounts")
     accounts = cursor.fetchall()
     for account in accounts:
         print(f"Account ID: {account[0]}, Account Name: {account[1]}, Balance: {account[2]}\n")
 
+# Function to display balance of selected account by ID
 def display_selected_account_by_id(connection, account_id):
-    """
-    Function to display balance of selected account by ID
-    """
+
     cursor = connection.cursor()
     cursor.execute("SELECT name, balance FROM Accounts WHERE account_id = ?", (account_id,))
     account = cursor.fetchone()
@@ -35,10 +33,9 @@ def display_selected_account_by_id(connection, account_id):
     else:
         print(f"No account found with ID: {account_id}")
 
+# Function to display balance of selected account by name
 def display_selected_account_by_name(connection, account_name):
-    """ 
-    Function to display balance of selected account by name
-    """
+    
     cursor = connection.cursor()
     cursor.execute("SELECT account_id, balance FROM Accounts WHERE name = ?", (account_name,))
     account = cursor.fetchone()
@@ -47,10 +44,9 @@ def display_selected_account_by_name(connection, account_name):
     else:
         print(f"No account found with name: {account_name}\n")
 
+#Function to show balance base on user choice
 def show_balance():
-    """ 
-    Main function
-    """
+
     connection = connect_db()
     try:
         while True:

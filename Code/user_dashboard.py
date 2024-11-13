@@ -15,7 +15,6 @@ import add_account
 import delete_account
 import show_account_balance
 import account_database
-import delete_account_2
 
 
 def display_dashboard():
@@ -94,8 +93,7 @@ def account_management():
                 add_account.add_account()
                 break
             elif choice == 2:
-                delete_account_2.delete_account() # delete if there no transaction and budget
-                #delete_account.delete_account() # delete assosiated transaction and budget
+                delete_account.delete_account()
                 break
             elif choice == 3:
                 show_account_balance.show_balance()
