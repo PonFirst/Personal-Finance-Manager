@@ -7,10 +7,8 @@ Created by Pon (First) Yimcharoen
 import sqlite3
 
 
+# This function is use to create the account table.
 def create_account_table():
-    """
-    This function is use to create the account table.
-    """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
     sql_command = """CREATE TABLE IF NOT EXISTS Accounts (
@@ -22,23 +20,17 @@ def create_account_table():
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
-    
 
+# This function is use to clear the account table.
 def clear_account_table():
-    """
-    This function is use to clear the account table
-    """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
     cursor.execute("DROP TABLE IF EXISTS Accounts;")
     connection.commit()
     connection.close()
 
-
+# This function is use to create the transaction table.
 def create_transactions_table():
-    """
-    This function is use to create the transaction table.
-    """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
     sql_command = """CREATE TABLE IF NOT EXISTS Transactions (
@@ -54,8 +46,8 @@ def create_transactions_table():
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
-    
-    
+
+# This function is use to clear the transaction table.
 def clear_transactions_table():
     """
     This function is use to clear the transaction table.
@@ -66,11 +58,8 @@ def clear_transactions_table():
     connection.commit()
     connection.close()
 
-
+# This function is use to create the budget table.
 def create_budget_table():
-    """
-    This function is use to create the budget table.
-    """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
 
@@ -87,12 +76,9 @@ def create_budget_table():
 
     connection.commit()
     connection.close()
-    
-    
+
+# This function is use to clear the budget table.
 def clear_budget_table():
-    """
-    This function is use to clear the budget table.
-    """
     connection = sqlite3.connect("personal_finance.db")
     cursor = connection.cursor()
     cursor.execute("DROP TABLE IF EXISTS Budgets;")
