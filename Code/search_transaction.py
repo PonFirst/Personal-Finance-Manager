@@ -48,8 +48,7 @@ def search_transaction():
         print("1. Source Bank Number")
         print("2. Destination Bank Number")
         print("3. Date")
-        print("C to Cancel")
-        choice = input("Enter your choice (1, 2, or 3): ")
+        choice = input("Enter your choice (1, 2, 3 or cancel): ")
 
         if choice == "1":       # Search by bank number
             account_id = input("Enter the source account id to search for (or type 'cancel' to exit): ")
@@ -139,7 +138,7 @@ def search_transaction():
                 print()
             break
 
-        elif choice == "C":     # Cancel operation
+        elif choice == "cancel":     # Cancel operation
             print("Operation cancelled.")
             return
         else:
