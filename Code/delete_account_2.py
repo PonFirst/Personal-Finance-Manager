@@ -1,6 +1,7 @@
 """ 
-delete_account.py
+delete_account_2.py
 Function to delete account from the account database
+account can be deleted if there are no associated transactions or budgets
 Created by Baipor 
 """
 
@@ -62,27 +63,31 @@ def delete_account():
 
         else:
             print("Invalid choice. Please enter '1' or '2'.")
-       
+
+    # Check for associated transactions
+    cursor.execute('SELECT COUNT(*) FROM Transactions WHERE source_account_id = ? OR destination_account_id = ?', (account_id, account_id))
+    transaction_count = cursor.fetchone()[0]
+
+    if transaction_count > 0:
+        print(f"Cannot delete account '{account_name}' because it has associated transactions.")
+        connection.close()
+        return
+
+    # Check for associated budgets
+    cursor.execute('SELECT COUNT(*) FROM Budgets WHERE account_id = ?', (account_id,))
+    budget_count = cursor.fetchone()[0]
+
+    if budget_count > 0:
+        print(f"Cannot delete account '{account_name}' because it has associated budgets.")
+        connection.close()
+        return
+
     # Ask for confirmation
-    confirmation = input("Are you sure you want to delete the account '{account_name}' and all its related data? "
+    confirmation = input(f"Are you sure you want to delete the account '{account_name}'? "
                          "Type 'Y' to confirm or 'N' to cancel: ").strip().lower()
 
     if confirmation == 'y':
         try:
-            # Delete the account's transactions if they exist
-            cursor.execute('DELETE FROM Transactions WHERE source_account_id = ? OR destination_account_id = ?', (account_id, account_id))
-            if cursor.rowcount > 0:
-                print("Transactions deleted successfully!")
-            else:
-                print("No transactions found for this account.")
-
-            # Delete the account's budget if it exists
-            cursor.execute('DELETE FROM Budgets WHERE account_id = ?', (account_id,))
-            if cursor.rowcount > 0:
-               print("Budget deleted successfully!")
-            else:
-               print("No budget found for this account.")
-
             # Delete the account from the database
             cursor.execute('DELETE FROM Accounts WHERE account_id = ?', (account_id,))
             print("Account deleted successfully!")
@@ -97,3 +102,6 @@ def delete_account():
 
     # Close the connection
     connection.close()
+
+if __name__ == '__main__':
+    delete_account()
