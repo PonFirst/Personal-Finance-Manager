@@ -5,10 +5,9 @@ Created by Copter
 
 import sqlite3
 
+#    Function to show all transactions in the database
 def show_transactions():
-    '''
-    Function to show all transactions in the database
-    '''
+    
     try:
         # Connect to the SQLite database
         conn = sqlite3.connect("personal_finance.db")
@@ -37,5 +36,6 @@ def show_transactions():
         # Close the connection
         conn.close()
 
+    # Handle error if file not found
     except sqlite3.OperationalError as _:
         print(f"An error occurred: {_}")
