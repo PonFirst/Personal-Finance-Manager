@@ -15,7 +15,6 @@ import add_account
 import delete_account
 import show_account_balance
 import account_database
-import delete_account_2
 
 
 def display_dashboard():
