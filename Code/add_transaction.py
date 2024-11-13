@@ -7,12 +7,11 @@ Created by Copter
 import datetime
 import sqlite3
 
+# Function to validate account id
 def valid_bank_num(account_id):
-    """
-    Function to validate account id
-    """
     return account_id.isdigit() and len(account_id) == 4
 
+# Function to validate amount
 def valid_amount(amount):
     """
     Function to validate amount
@@ -23,6 +22,7 @@ def valid_amount(amount):
     except ValueError:
         return False
 
+# Function to validate date
 def valid_date(date_str):
     """
     Function to validate date
@@ -33,12 +33,14 @@ def valid_date(date_str):
     except ValueError:
         return False
 
+# Function to check if source account id and destination account id are the same
 def id_check(source_account_id, destination_account_id):
     """
     Function to check if source account id and destination account id are the same
     """
     return source_account_id == destination_account_id
 
+# Function to check if the account exists in the database
 def account_check(account_id):
     """
     Function to check if the account exists in the database
@@ -50,6 +52,7 @@ def account_check(account_id):
     conn.close()
     return result[0] if result else None
 
+# Function to check if the transaction between account types is allowed
 def type_allow(source_account_type, destination_account_type):
     """
     Function to check if the transaction between account types is allowed
@@ -62,6 +65,7 @@ def type_allow(source_account_type, destination_account_type):
     }
     return destination_account_type in allowed_category.get(source_account_type, [])
 
+#Act as a main function to add a transaction
 def add_transaction():
     '''
     Function to add a transaction to the database

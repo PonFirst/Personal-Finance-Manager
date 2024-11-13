@@ -19,6 +19,7 @@ def delete_transaction():
     conn = sqlite3.connect('personal_finance.db')
     cursor = conn.cursor()
     
+    # Check if there are any transactions in the database
     while True:
         
         print("1. source account")
@@ -52,6 +53,7 @@ def delete_transaction():
         else:
             print("Invalid search option. Please enter 'account', 'date', 'show all', or 'cancel'.")
 
+    # Ask the user for the transaction id to delete
     while True:
         transaction_id = input("Enter the transaction id to delete (or type 'cancel' to exit): ")
         if transaction_id.lower() == 'cancel':
@@ -75,10 +77,8 @@ def delete_transaction():
     conn.close()
 
 
+# Search transactions by bank account number.
 def search_by_account():
-    """
-    Search transactions by bank account number.
-    """
     account_number = input("Enter the bank id number (4 digits) or type 'cancel' to exit: ")
     if account_number.lower() == 'cancel':
         print("Operation cancelled.")
@@ -108,18 +108,16 @@ def search_by_account():
         print("Invalid bank account number. Please enter a 4-digit number.")
     return False
 
+# Search transactions by date.
 def search_by_date():
-    """
-    Search transactions by date.
-    """
     date_str = input("Enter the date (YYYY-MM-DD HH:MM:SS) or type 'cancel' to exit: ")
     
     if date_str.lower() == 'cancel':
         print("Operation cancelled.")
         return True
-    
+
+    # Check if the date is in the correct format
     if valid_date(date_str):        
-        # Connect to the SQLite database
         conn = sqlite3.connect('personal_finance.db')
         cursor = conn.cursor()
 
