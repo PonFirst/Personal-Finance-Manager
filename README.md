@@ -37,8 +37,22 @@ Personal Finance Manager is an application designed to help users in Thailand tr
 - Kasidith (Copter) Saetang
 - Natcha (Baipor) Soranathavornkul
 
-### Last Update: 
+### Last Update:
+
 November 13, 2024
 
 ### Release date of the software
+
 November 13, 2024
+
+### Installation Instructions
+
+1. Go to https://drive.google.com/drive/folders/1SsqrJHBvtv2VyGu6_9W95SGa63GG23dY?usp=sharing
+2. Download the zip file that is prefixed by your operating system. (e.g. SuSeLeap-Personal-Finance-Manager.zip)
+3. Locate the downloaded zip file and unzip it.
+
+### Getting started
+
+1. Open a terminal window or command prompt, depending on your operating systems.
+2. Type "cd " (With a space), then drap and drop the unzipped folder into the terminal window and press Enter.
+3. Run the installation script by typing "./install.sh" and pressing Enter.
