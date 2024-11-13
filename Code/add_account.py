@@ -1,29 +1,11 @@
 """
 add_account.py
 Function for personal finance manager to add new account to database
-Add Account Create a new account that contains, Account type, Account name, Account ID
-and account balance. The program will generate four digit account ID based on user account type.
+that contains, Account type, Account name, Account ID and account balance. 
+The program will generate four digit account ID based on user account type.
 
 For example : Income account will have ID starting with 1, the account ID is 1001 and 
 if there are more this type of account the next account ID will be 1002 and so on
-The program will validate the account type, account name, account ID, and account balance. 
-If the data is valid, the program will add the account to the database. 
-If the data is invalid, the program will raise an error message and ask user to reinput data
-
-Created by Baipor.
-"""
-
-"""
-add_account.py
-Function for personal finance manager to add new account to database
-Add Account Create a new account that contains, Account type, Account name, Account ID
-and account balance. The program will generate four digit account ID based on user account type.
-
-For example : Income account will have ID starting with 1, the account ID is 1001 and 
-if there are more this type of account the next account ID will be 1002 and so on
-The program will validate the account type, account name, account ID, and account balance. 
-If the data is valid, the program will add the account to the database. 
-If the data is invalid, the program will raise an error message and ask user to reinput data
 
 Created by Baipor.
 """
@@ -31,36 +13,34 @@ Created by Baipor.
 import sqlite3
 from account import Account
 
+# class to raise exception when user input 'cancel'
 class ExitInput(Exception):
-    """Custom exception to handle user exit during input"""
     pass
 
+#function to validate account type
 def validate_account_type(account_type):
-    """
-    function to validate account type
-    """
+    
     valid_types = {
         "1": "Income",
         "2": "Expense",
         "3": "Asset",
         "4": "Liability"
     }
+
     if account_type not in valid_types:
         raise ValueError("Invalid account type.")
     return valid_types[account_type]
 
+#function to validate account name (name cannot be empty)
 def validate_account_name(account_name):
-    """
-    function to validate account name
-    """
+    
     if not account_name.strip():
         raise ValueError("Account name cannot be empty.")
     return account_name
 
+#function to check if account name is unique
 def is_account_name_unique(account_name):
-    """
-    function to check if account name is unique
-    """
+    
     connection = sqlite3.connect('personal_finance.db')
     cursor = connection.cursor()
     cursor.execute('SELECT name FROM Accounts WHERE name = ?', (account_name,))
@@ -70,10 +50,9 @@ def is_account_name_unique(account_name):
         raise ValueError("Account name already exists.")
     return account_name
 
+#function to get next account ID
 def get_next_account_id(account_type):
-    """
-    function to get next account ID
-    """
+  
     type_prefix = {
         "Income": "1",
         "Expense": "2",
@@ -98,10 +77,9 @@ def get_next_account_id(account_type):
     else:
         return int(max_id) + 1
 
+#function to validate account balance
 def validate_amount(balance):
-    """
-    function to validate account balance
-    """
+    
     try:
         balance = float(balance)
         if balance < 0:
@@ -110,10 +88,10 @@ def validate_amount(balance):
     except ValueError:
         raise ValueError("Balance must be a positive number.")
 
+#function to get valid input
+#if user input 'cancel' the program will raise ExitInput exception
 def get_valid_input(prompt, validation_func):
-    """
-    function to get valid input
-    """
+ 
     while True:
         user_input = input(prompt)
         if user_input == 'cancel':
@@ -123,10 +101,10 @@ def get_valid_input(prompt, validation_func):
         except ValueError as e:
             print(f"Error: {e} Please try again.")
 
+#function to add account
+# ask user input for account type, account name and balance then add the account to the database
 def add_account():
-    """
-    function to add account
-    """
+ 
     try:
         # Get account type with validation
         account_type = get_valid_input(
