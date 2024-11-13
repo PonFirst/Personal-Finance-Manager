@@ -5,7 +5,6 @@ Created by Pon (First) Yimcharoen
 """
 
 import csv
-import sqlite3
 import account_database
 from account import Account
 
@@ -46,7 +45,7 @@ def upload_template():
     the template accounts from a CSV file.
     """
     filename = input("Enter the name of the file you want to use: ")
-    
+
     if not filename.endswith(".csv"):
         print("Error: The file must be in CSV format.")
     else:
@@ -86,7 +85,7 @@ def upload_template():
                         all_rows_valid = False
                         continue
                     accounts.add(account_id)
-                    
+
                     # Check for unique name
                     if not is_unique_name(name, processed_names):
                         print(f"Error: Name '{name}' is either not unique or is blank.")
@@ -165,4 +164,3 @@ def is_valid_balance(balance):
         return True
     except ValueError:
         return False
-

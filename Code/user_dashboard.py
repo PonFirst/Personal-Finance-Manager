@@ -53,19 +53,26 @@ def initialize_account_chart():
     This function allow the user to choose to initialize
     account by using template or their own.
     """
-    print("1. Use Template")
-    print("2. Upload A Template")
-
-    try:
-        choice = int(input("Choose a option: "))
-        if choice == 1:
-            init_acc.use_template("Finance Template.csv")
-        elif choice == 2:
-            init_acc.upload_template()
-        else:
+    
+    while True:
+        print("1. Use Template")
+        print("2. Upload A Template")
+        print("3. Exit")
+        try:
+            choice = int(input("Choose a option: "))
+            if choice == 1:
+                init_acc.use_template("Finance Template.csv")
+                break
+            elif choice == 2:
+                init_acc.upload_template()
+                break
+            elif choice == 3:
+                print("Opeation canceled.")
+                break
+            else:
+                print("Invalid Choice!")
+        except ValueError:
             print("Invalid Choice!")
-    except ValueError:
-        print("Invalid Choice!")
 
 
 def account_management():
@@ -94,25 +101,33 @@ def account_management():
 
 
 def transaction_management():
-    print("1. Add Transaction")
-    print("2. Search Transaction")
-    print("3. Delete Transaction")
-    print("4. View Transaction")
-
-    try:
-        choice = int(input("Choose a option: "))
-        if choice == 1:
-            add_transaction.add_transaction()
-        elif choice == 2:
-            search_transaction.search_transaction()
-        elif choice == 3:
-            delete_transaction.delete_transaction()
-        elif choice == 4:
-            show_transaction.show_transactions()
-        else:
+    while True:
+        print("1. Add Transaction")
+        print("2. Search Transaction")
+        print("3. Delete Transaction")
+        print("4. View Transaction")
+        print("5. Exit")
+        try:
+            choice = int(input("Choose a option: "))
+            if choice == 1:
+                add_transaction.add_transaction()
+                break
+            elif choice == 2:
+                search_transaction.search_transaction()
+                break
+            elif choice == 3:
+                delete_transaction.delete_transaction()
+                break
+            elif choice == 4:
+                show_transaction.show_transactions()
+                break
+            elif choice == 5:
+                print("Operation canceled.")
+                break
+            else:
+                print("Invalid Choice!")
+        except ValueError:
             print("Invalid Choice!")
-    except ValueError:
-        print("Invalid Choice!")
 
 
 def budget_interface():
@@ -121,22 +136,32 @@ def budget_interface():
     add budget, delete budget, modify budget 
     or view budget report.
     """
-    print("1. Add Budget")
-    print("2. Modify Budget")
-    print("3. Delete Budget")
-    print("4. View Budget Report")
     budget = Budget()
-    try:
-        choice = int(input("Choose a option: "))
-        if choice == 1:
-            budget.add_budget()
-        elif choice == 2:
-            budget.modify_budget()
-        elif choice == 3:
-            budget.delete_budget()
-        elif choice == 4:
-            budget.create_budget_report()
-        else:
+    
+    while True:
+        print("1. Add Budget")
+        print("2. Modify Budget")
+        print("3. Delete Budget")
+        print("4. View Budget Report")
+        print("5. Exit")
+        try:
+            choice = int(input("Choose a option: "))
+            if choice == 1:
+                budget.add_budget()
+                break
+            elif choice == 2:
+                budget.modify_budget()
+                break
+            elif choice == 3:
+                budget.delete_budget()
+                break
+            elif choice == 4:
+                budget.create_budget_report()
+                break
+            elif choice == 5:
+                print("Operation canceled.")
+                break
+            else:
+                print("Invalid Choice!")
+        except ValueError:
             print("Invalid Choice!")
-    except ValueError:
-        print("Invalid Choice!")
