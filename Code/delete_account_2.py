@@ -17,17 +17,17 @@ def delete_account():
 
     while True:
         # Prompt user to choose deletion method
-        method = input("Enter '1' to delete the account by name, '2' to delete by ID, or 'exit' to exit: ").strip()
+        method = input("Enter '1' to delete the account by name, '2' to delete by ID, or 'cancel' to exit: ").strip()
 
-        if method == 'exit':
+        if method == 'cancel':
             connection.close()
             return
 
         elif method == '1':
             # Get account name
-            account_name = input("Enter account name, or 'exit' to exit: ").strip()
+            account_name = input("Enter account name, or 'cancel' to exit: ").strip()
 
-            if account_name == 'exit':
+            if account_name == 'cancel':
                 connection.close()
                 return
 
@@ -44,9 +44,9 @@ def delete_account():
 
         elif method == '2':
             # Get account ID
-            account_id = input("Enter account ID, or 'exit' to exit: ").strip()
+            account_id = input("Enter account ID, or 'cancel' to exit: ").strip()
 
-            if account_id == 'exit':
+            if account_id == 'cancel':
                 connection.close()
                 return
 

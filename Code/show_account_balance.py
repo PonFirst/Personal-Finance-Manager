@@ -55,10 +55,10 @@ def show_balance():
     try:
         while True:
             choice = input(
-                "\nEnter '1' to show balance of all accounts,\n"
-                "'2' to show balance by an account ID,\n"
-                "'3' to show balance of an account by name,\n"
-                "or '4' to exit the program: "
+                "Enter '1' to show balance of all accounts,\n"
+                "      '2' to show balance by an account ID,\n"
+                "      '3' to show balance of an account by name,\n"
+                "      '4' to exit the program: "
             ).strip()
 
             if choice == '1':
@@ -68,7 +68,7 @@ def show_balance():
                 if account_id.isdigit():
                     display_selected_account_by_id(connection, account_id)
                 else:
-                    print("Invalid account ID. Please enter a numeric value.")
+                    print("Invalid account ID. Please enter a numeric value.\n")
             elif choice == '3':
                 account_name = input("Enter the account name: ").strip()
                 display_selected_account_by_name(connection, account_name)
@@ -76,7 +76,7 @@ def show_balance():
                 print("Exiting the program.")
                 break
             else:
-                print("Invalid choice. Please enter '1', '2', '3', or '4'.\n")
+                print("\nInvalid choice. Please enter '1', '2', '3', or '4'.\n")
 
     except sqlite3.Error as e:
         print(f"An error occurred: {e}")

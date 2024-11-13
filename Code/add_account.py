@@ -116,7 +116,7 @@ def get_valid_input(prompt, validation_func):
     """
     while True:
         user_input = input(prompt)
-        if user_input == 'exit':
+        if user_input == 'cancel':
             raise ExitInput("Cancel adding account...")
         try:
             return validation_func(user_input)
@@ -130,19 +130,19 @@ def add_account():
     try:
         # Get account type with validation
         account_type = get_valid_input(
-            "Enter account type (1: Income, 2: Expense, 3: Asset, 4: Liability) or 'exit' to exit: ",
+            "Enter account type (1: Income, 2: Expense, 3: Asset, 4: Liability) or 'cancel' to exit: ",
             validate_account_type
         )
 
         # Get account name with validation and uniqueness check
         account_name = get_valid_input(
-            "Enter account name or type 'exit' to exit: ",
+            "Enter account name or type 'cancel' to exit: ",
             lambda name: is_account_name_unique(validate_account_name(name))
         )
 
         # Get balance with validation
         balance = get_valid_input(
-            "Enter amount of balance or type 'exit' to exit: ",
+            "Enter amount of balance or type 'cancel' to exit: ",
             validate_amount
         )
 
