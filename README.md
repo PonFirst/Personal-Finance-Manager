@@ -30,3 +30,15 @@ Personal Finance Manager is an application designed to help users in Thailand tr
 - Modify budget
 - Delete budget
 - View Budget Report
+
+### Authors
+
+- Pon (First) Yimcharoen
+- Kasidith (Copter) Saetang
+- Natcha (Baipor) Soranathavornkul
+
+### Last Update: 
+November 13, 2024
+
+### Release date of the software
+November 13, 2024
