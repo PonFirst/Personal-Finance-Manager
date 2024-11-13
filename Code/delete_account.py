@@ -53,13 +53,13 @@ def delete_account():
         return
 
     # Ask for confirmation
-    confirmation = input(f"Are you sure you want to delete the account '{account_name}' and all its related data? "
+    confirmation = input("Are you sure you want to delete the account '{account_name}' and all its related data? "
                          "Type 'Y' to confirm or 'N' to cancel: ").strip().lower()
 
     if confirmation == 'y':
         try:
             # Delete the account's transactions if they exist
-            cursor.execute('DELETE FROM Transactions WHERE account_id = ?', (account_id,))
+            cursor.execute('DELETE FROM Transactions WHERE source_account_id = ? OR destination_account_id = ?', (account_id, account_id))
             if cursor.rowcount > 0:
                 print("Transactions deleted successfully!")
             else:
