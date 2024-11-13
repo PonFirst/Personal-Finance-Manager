@@ -55,7 +55,7 @@ def type_allow(source_account_type, destination_account_type):
     Function to check if the transaction between account types is allowed
     """
     allowed_category = {
-        "Expense": ["asset", "Liability"],
+        "Expense": ["Asset", "Liability"],
         "Asset": ["Expense", "Liability"],
         "Income" : ["Asset", "liability"],
         "liability" : ["Asset"],
@@ -68,7 +68,10 @@ def add_transaction():
     '''
 
     while True:
-        source_account_id = input("Enter source account id (4 digits): ")
+        source_account_id = input("Enter source account id (4 digits) or 'C' to cancel: ")
+        if source_account_id.upper() == 'C':
+            print("Transaction cancelled.")
+            return
         if valid_bank_num(source_account_id):
             source_account_type = account_check(source_account_id)
             if source_account_type:
@@ -76,7 +79,10 @@ def add_transaction():
         print("Invalid account id or account does not exist. Please enter a valid 4-digit number.")
 
     while True:
-        destination_account_id = input("Enter destination account id (4 digits): ")
+        destination_account_id = input("Enter destination account id (4 digits) or 'C' to cancel: ")
+        if destination_account_id.upper() == 'C':
+            print("Transaction cancelled.")
+            return
         if valid_bank_num(destination_account_id):
             if not id_check(source_account_id, destination_account_id):
                 destination_account_type = account_check(destination_account_id)
@@ -93,17 +99,26 @@ def add_transaction():
             print("Invalid account id. Please enter a 4-digit number.")
 
     while True:
-        amount = input("Enter the transaction amount: ")
+        amount = input("Enter the transaction amount or 'C' to cancel: ")
+        if amount.upper() == 'C':
+            print("Transaction cancelled.")
+            return
         if valid_amount(amount):
             amount = float(amount)
             break
 
         print("Invalid amount. Please enter a positive number.")
 
-    description = input("Enter a description for the transaction: ")
+    description = input("Enter a description for the transaction or 'C' to cancel: ")
+    if description.upper() == 'C':
+        print("Transaction cancelled.")
+        return
 
     while True:
-        transaction_date = input("Enter transaction date (format: YYYY-MM-DD): ")
+        transaction_date = input("Enter transaction date (format: YYYY-MM-DD) or 'C' to cancel: ")
+        if transaction_date.upper() == 'C':
+            print("Transaction cancelled.")
+            return
         if valid_date(transaction_date):
             break
 

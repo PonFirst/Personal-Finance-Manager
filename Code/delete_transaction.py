@@ -19,21 +19,33 @@ def delete_transaction():
     cursor = conn.cursor()
     
     while True:
-        search_by = input("Do you want to search by source account id or date? (account/date/show all): ")
+        search_by = input("Do you want to search by source account id or date? (account/date/show all/cancel): ")
         if search_by.lower() == "account":
-            search_by_account()
+            if search_by_account():
+                conn.close()
+                return
             break
         elif search_by.lower() == "date":
-            search_by_date()
+            if search_by_date():
+                conn.close()
+                return
             break
         elif search_by.lower() == "show all":
             show_transactions()
             break
+        elif search_by.lower() == "cancel":
+            print("Operation cancelled.")
+            conn.close()
+            return
         else:
-            print("Invalid search option. Please enter 'account' or 'date' or 'show all'.")
+            print("Invalid search option. Please enter 'account', 'date', 'show all', or 'cancel'.")
 
     while True:
-        transaction_id = input("Enter the transaction id to delete: ")
+        transaction_id = input("Enter the transaction id to delete (or type 'cancel' to exit): ")
+        if transaction_id.lower() == 'cancel':
+            print("Operation cancelled.")
+            conn.close()
+            return
         try:
             transaction_id = int(transaction_id)
             # Execute a query to delete a transaction by id
@@ -55,7 +67,10 @@ def search_by_account():
     """
     Search transactions by bank account number.
     """
-    account_number = input("Enter the bank id number (4 digits): ")
+    account_number = input("Enter the bank id number (4 digits) or type 'cancel' to exit: ")
+    if account_number.lower() == 'cancel':
+        print("Operation cancelled.")
+        return True
     if valid_bank_num(account_number):
         # Connect to the SQLite database
         conn = sqlite3.connect('personal_finance.db')
@@ -79,12 +94,16 @@ def search_by_account():
         conn.close()
     else:
         print("Invalid bank account number. Please enter a 4-digit number.")
+    return False
 
 def search_by_date():
     """
     Search transactions by date.
     """
-    date_str = input("Enter the date (YYYY-MM-DD HH:MM:SS): ")
+    date_str = input("Enter the date (YYYY-MM-DD HH:MM:SS) or type 'cancel' to exit: ")
+    if date_str.lower() == 'cancel':
+        print("Operation cancelled.")
+        return True
     if valid_date(date_str):
         # Connect to the SQLite database
         conn = sqlite3.connect('personal_finance.db')
@@ -108,3 +127,4 @@ def search_by_date():
         conn.close()
     else:
         print("Invalid date format. Please enter the date in the format YYYY-MM-DD")
+    return False
