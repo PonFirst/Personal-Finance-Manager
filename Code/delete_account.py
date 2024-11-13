@@ -87,8 +87,8 @@ def delete_account():
         return
 
     # Ask for confirmation
-    confirmation = input("Are you sure you want to delete the account '{account_name}'? "
-                         "Type 'Y' to confirm or 'N' to cancel: ").strip().lower()
+    confirmation = input(f"Are you sure you want to delete the account '{account_name}'?"
+                         "\nType 'Y' to confirm or 'N' to cancel: ").strip().lower()
 
     #if user confirm, delete the account
     if confirmation == 'y':
