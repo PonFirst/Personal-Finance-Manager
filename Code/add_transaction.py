@@ -57,8 +57,8 @@ def type_allow(source_account_type, destination_account_type):
     allowed_category = {
         "Expense": ["Asset", "Liability"],
         "Asset": ["Expense", "Liability"],
-        "Income" : ["Asset", "liability"],
-        "liability" : ["Asset"],
+        "Income" : ["Asset", "Liability"],
+        "Liability" : ["Asset"],
     }
     return destination_account_type in allowed_category.get(source_account_type, [])
 
