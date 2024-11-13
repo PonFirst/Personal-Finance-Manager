@@ -1,5 +1,5 @@
 """ 
-delete_account_2.py
+delete_account.py
 Function to delete account from the account database
 account can be deleted if there are no associated transactions or budgets
 Created by Baipor 
