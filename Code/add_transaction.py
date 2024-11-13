@@ -149,7 +149,7 @@ def add_transaction():
     # Connect to the SQLite database
     conn = sqlite3.connect('personal_finance.db')       
     cursor = conn.cursor()
-    
+
     # Execute a query to insert the transaction into the database
     cursor.execute('''
             INSERT INTO Transactions (source_account_id, destination_account_id, amount, description, date)
