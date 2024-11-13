@@ -8,12 +8,11 @@ Created by Copter
 import datetime
 import sqlite3
 
+# Function to check if the bank number is valid
 def valid_id(account_id):
-    '''
-    Function to check if the bank number is valid
-    '''
     return account_id.isdigit() and len(account_id) == 4
 
+# Function to check if the date is valid
 def valid_date(date_str):
     '''
     Function to check if the date is valid
@@ -24,6 +23,7 @@ def valid_date(date_str):
     except ValueError:
         return False
 
+# Function to check that will look for transaction in database
 def show_check():
     '''
     Function to check if there are any transactions in the database
@@ -35,6 +35,7 @@ def show_check():
     conn.close()
     return result
 
+# Act as a main function to search for the transaction
 def search_transaction():
     '''
     Function to search for transaction from database
@@ -43,6 +44,7 @@ def search_transaction():
         print("No transactions available to search.")
         return
 
+    # Ask the user how they would like to search for the transaction
     while True:
         print("How would you like to search for the transaction?")
         print("1. Source Bank Number")
