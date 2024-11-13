@@ -9,6 +9,7 @@ Created by Copter
 import sqlite3
 from add_transaction import valid_bank_num, valid_date
 from show_transaction import show_transactions
+from search_transaction import *
 
 # Function to delete transaction from the database
 def delete_transaction():
@@ -19,18 +20,29 @@ def delete_transaction():
     cursor = conn.cursor()
     
     while True:
-        search_by = input("Do you want to search by source account id or date? (account/date/show all/cancel): ")
-        if search_by.lower() == "account":
+        
+        print("1. source account")
+        print("2. destination account")
+        print("3. transaction date")
+        print("4. All transaction")
+        
+        search_by = input("How do you want to look for transactio ( or cancel ): ")
+        if search_by.lower() == "1":
             if search_by_account():
                 conn.close()
                 return
             break
-        elif search_by.lower() == "date":
+        elif search_by.lower() == "2":
+            if search_by_destination():
+                conn.close()
+                return
+            break
+        elif search_by.lower() == "3":
             if search_by_date():
                 conn.close()
                 return
             break
-        elif search_by.lower() == "show all":
+        elif search_by.lower() == "4":
             show_transactions()
             break
         elif search_by.lower() == "cancel":
@@ -130,3 +142,35 @@ def search_by_date():
     else:
         print("Invalid date format. Please enter the date in the format YYYY-MM-DD")
     return False
+
+def search_by_destination():
+    """
+    Search transactions by destination account number.
+    """
+    account_number = input("Enter the bank id number (4 digits) or type 'cancel' to exit: ")
+    if account_number.lower() == 'cancel':
+        print("Operation cancelled.")
+        return True
+    if valid_bank_num(account_number):
+        # Connect to the SQLite database
+        conn = sqlite3.connect('personal_finance.db')
+        cursor = conn.cursor()
+
+        # Execute a query to search transactions by account number
+        cursor.execute("SELECT * FROM transactions WHERE destination_account_id=?", (account_number,))
+        transactions = cursor.fetchall()
+
+        if transactions:
+            print(f"Transactions for account number {account_number}:")
+            column_names = [description[0] for description in cursor.description]
+            for transaction in transactions:
+                for col_name, value in zip(column_names, transaction):
+                    print(f"{col_name}: {value}")
+                print("-" * 20)
+        else:
+            print(f"No transactions found for account number {account_number}.")
+
+        # Close the connection
+        conn.close()
+    else:
+        print("Invalid bank account number. Please enter a 4-digit number.")

@@ -24,69 +24,123 @@ def valid_date(date_str):
     except ValueError:
         return False
 
+def show_check():
+    '''
+    Function to check if there are any transactions in the database
+    '''
+    conn = sqlite3.connect('personal_finance.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Transactions")
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
 def search_transaction():
     '''
     Function to search for transaction from database
     '''
-    print("How would you like to search for the transaction?")
-    print("1. By Bank Number")
-    print("2. By Date")
-    print("3. Cancel")
-    choice = input("Enter your choice (1, 2, or 3): ")
+    if not show_check():
+        print("No transactions available to search.")
+        return
 
-    if choice == "1":       # Search by bank number
-        account_id = input("Enter the source account id to search for (or type 'cancel' to exit): ")
-        if account_id.lower() == 'cancel':
-            print("Operation cancelled.")
-            return
-        if not valid_id(account_id):
-            print("Invalid bank number. Please enter a 4-digit number.")
-            return
+    while True:
+        print("How would you like to search for the transaction?")
+        print("1. Source Bank Number")
+        print("2. Destination Bank Number")
+        print("3. Date")
+        print("C to Cancel")
+        choice = input("Enter your choice (1, 2, or 3): ")
 
-        connection = sqlite3.connect("personal_finance.db")
-        cursor = connection.cursor()
-        query = (
-            "SELECT * FROM Transactions WHERE source_account_id = ?"
-        )
-        cursor.execute(query, (account_id,))
-        results = cursor.fetchall()
-        column_names = [description[0] for description in cursor.description]
-        connection.close()
-
-        if not results:
-            print(f"No transactions found for bank number {account_id}.")
-
-        print("Transactions found:")
-        for result in results:
-            print(result)
-
-    elif choice == "2":     # Search by date
-        while True:
-            date_str = input("Enter the date to search for (format: YYYY-MM-DD) (or type 'cancel' to exit): ")
-            if date_str.lower() == 'cancel':
+        if choice == "1":       # Search by bank number
+            account_id = input("Enter the source account id to search for (or type 'cancel' to exit): ")
+            if account_id.lower() == 'cancel':
                 print("Operation cancelled.")
                 return
-            if valid_date(date_str):
-                break
-            print("Invalid date format. Please re-enter (YYYY-MM-DD).")
+            if not valid_id(account_id):
+                print("Invalid bank number. Please enter a 4-digit number.")
+                continue
 
-        connection = sqlite3.connect("personal_finance.db")
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM Transactions WHERE date(date) = date(?)", (date_str,))
-        results = cursor.fetchall()
-        column_names = [description[0] for description in cursor.description]
-        connection.close()
+            connection = sqlite3.connect("personal_finance.db")
+            cursor = connection.cursor()
+            query = (
+                "SELECT * FROM Transactions WHERE source_account_id = ?"
+            )
+            cursor.execute(query, (account_id,))
+            results = cursor.fetchall()
+            column_names = [description[0] for description in cursor.description]
+            connection.close()
 
-        if not results:
-            print(f"No transactions found for date {date_str}.")
-        else:
+            if not results:
+                print(f"No transactions found for bank number {account_id}.")
+                continue
+
             print("Transactions found:")
             for result in results:
                 for col_name, value in zip(column_names, result):
                     print(f"{col_name}: {value}")
                 print()
+            break
 
-    elif choice == "3":
-        print("Operation cancelled.")
-    else:
-        print("Invalid choice. Please enter 1, 2, or 3.")
+        elif choice == "2":     # Search by destination bank number
+            account_id = input("Enter the destination account id to search for (or type 'cancel' to exit): ")
+            if account_id.lower() == 'cancel':
+                print("Operation cancelled.")
+                return
+            if not valid_id(account_id):
+                print("Invalid bank number. Please enter a 4-digit number.")
+                continue
+
+            connection = sqlite3.connect("personal_finance.db")
+            cursor = connection.cursor()
+            query = (
+                "SELECT * FROM Transactions WHERE destination_account_id = ?"
+            )
+            cursor.execute(query, (account_id,))
+            results = cursor.fetchall()
+            column_names = [description[0] for description in cursor.description]
+            connection.close()
+
+            if not results:
+                print(f"No transactions found for bank number {account_id}.")
+                continue
+
+            print("Transactions found:")
+            for result in results:
+                for col_name, value in zip(column_names, result):
+                    print(f"{col_name}: {value}")
+                print()
+            break
+
+        elif choice == "3":     # Search by date
+            while True:
+                date_str = input("Enter the date to search for (format: YYYY-MM-DD) (or type 'cancel' to exit): ")
+                if date_str.lower() == 'cancel':
+                    print("Operation cancelled.")
+                    return
+                if valid_date(date_str):
+                    break
+                print("Invalid date format. Please re-enter (YYYY-MM-DD).")
+
+            connection = sqlite3.connect("personal_finance.db")
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM Transactions WHERE date(date) = date(?)", (date_str,))
+            results = cursor.fetchall()
+            column_names = [description[0] for description in cursor.description]
+            connection.close()
+
+            if not results:
+                print(f"No transactions found for date {date_str}.")
+                continue
+
+            print("Transactions found:")
+            for result in results:
+                for col_name, value in zip(column_names, result):
+                    print(f"{col_name}: {value}")
+                print()
+            break
+
+        elif choice == "C":     # Cancel operation
+            print("Operation cancelled.")
+            return
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
