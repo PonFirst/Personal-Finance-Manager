@@ -14,6 +14,8 @@ def valid_id(account_id):
 
 # Function to check if the date is valid
 def valid_date(date_str):
+    if len(date_str) != 10:
+        return False
     try:
         datetime.datetime.strptime(date_str, "%Y-%m-%d")
         return True

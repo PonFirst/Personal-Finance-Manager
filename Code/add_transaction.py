@@ -13,9 +13,6 @@ def valid_bank_num(account_id):
 
 # Function to validate amount
 def valid_amount(amount):
-    """
-    Function to validate amount
-    """
     try:
         amount = float(amount)
         return amount > 0
@@ -24,9 +21,8 @@ def valid_amount(amount):
 
 # Function to validate date
 def valid_date(date_str):
-    """
-    Function to validate date
-    """
+    if len(date_str) != 10:
+        return False
     try:
         datetime.datetime.strptime(date_str, "%Y-%m-%d")
         return True
@@ -35,16 +31,10 @@ def valid_date(date_str):
 
 # Function to check if source account id and destination account id are the same
 def id_check(source_account_id, destination_account_id):
-    """
-    Function to check if source account id and destination account id are the same
-    """
     return source_account_id == destination_account_id
 
 # Function to check if the account exists in the database
 def account_check(account_id):
-    """
-    Function to check if the account exists in the database
-    """
     conn = sqlite3.connect('personal_finance.db')
     cursor = conn.cursor()
     cursor.execute("SELECT category FROM Accounts WHERE account_id = ?", (account_id,))
@@ -54,9 +44,6 @@ def account_check(account_id):
 
 # Function to check if the transaction between account types is allowed
 def type_allow(source_account_type, destination_account_type):
-    """
-    Function to check if the transaction between account types is allowed
-    """
     allowed_category = {
         "Expense": ["Asset", "Liability"],
         "Asset": ["Expense", "Liability"],
@@ -67,9 +54,6 @@ def type_allow(source_account_type, destination_account_type):
 
 #Act as a main function to add a transaction
 def add_transaction():
-    '''
-    Function to add a transaction to the database
-    '''
 
     while True:     # Loop until a valid source account id is entered
         source_account_id = input("Enter source account id (4 digits) or 'C' to cancel: ")

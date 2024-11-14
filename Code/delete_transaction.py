@@ -13,9 +13,6 @@ from search_transaction import *
 
 # Function to delete transaction from the database
 def delete_transaction():
-    """
-    Delete a transaction from the database by its ID.
-    """
     conn = sqlite3.connect('personal_finance.db')
     cursor = conn.cursor()
     
@@ -141,10 +138,8 @@ def search_by_date():
         print("Invalid date format. Please enter the date in the format YYYY-MM-DD")
     return False
 
+# to search transaction by destination account number
 def search_by_destination():
-    """
-    Search transactions by destination account number.
-    """
     account_number = input("Enter the bank id number (4 digits) or type 'cancel' to exit: ")
     if account_number.lower() == 'cancel':
         print("Operation cancelled.")
