@@ -24,6 +24,4 @@ else
     sudo zypper install -y sqlite3
 fi
 
-unzip Personal-Finance-Manager-Code.zip -d Code
-
 python3 Code/main.py

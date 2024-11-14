@@ -55,4 +55,5 @@ November 13, 2024
 
 1. Open a terminal window or command prompt, depending on your operating systems.
 2. Type "cd " (With a space), then drap and drop the unzipped folder into the terminal window and press Enter.
-3. Run the installation script by typing "./install.sh" and pressing Enter.
+3. Run the installation script by typing "./install.sh" for MacOS or Linux and pressing Enter.
+For Windows, type ".\window_install.bat" and press Enter to run the installation script.

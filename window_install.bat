@@ -27,9 +27,6 @@ if %errorlevel%==0 (
     choco install sqlite -y
 )
 
-echo "Unzipping Personal-Finance-Manager-Code.zip..."
-powershell -Command "Expand-Archive -Path 'Personal-Finance-Manager-Code.zip' -DestinationPath 'Code' -Force"
-
 echo "Running the main Python script"
 
 python3 Code\main.py
