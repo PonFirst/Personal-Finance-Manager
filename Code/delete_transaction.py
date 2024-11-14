@@ -27,7 +27,7 @@ def delete_transaction():
         print("3. transaction date")
         print("4. All transaction")
         
-        search_by = input("How do you want to look for transactio ( or cancel ): ")
+        search_by = input("How do you want to look for transaction? ( or cancel ): ")
         if search_by.lower() == "1":
             if search_by_account():
                 conn.close()
@@ -110,7 +110,7 @@ def search_by_account():
 
 # Search transactions by date.
 def search_by_date():
-    date_str = input("Enter the date (YYYY-MM-DD HH:MM:SS) or type 'cancel' to exit: ")
+    date_str = input("Enter the date (YYYY-MM-DD) or type 'cancel' to exit: ")
     
     if date_str.lower() == 'cancel':
         print("Operation cancelled.")
