@@ -6,8 +6,10 @@ Created by Pon (First) Yimcharoen
 
 import sqlite3
 
-# This class manages budget functionalities including adding, modifying,
-# deleting, and printing budget reports.
+'''
+This class manages budget functionalities including adding, modifying,
+deleting, and printing budget reports.
+'''
 class Budget:
     def __init__(self, db_name="personal_finance.db"):
         self.db_name = db_name
