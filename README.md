@@ -39,11 +39,11 @@ Personal Finance Manager is an application designed to help users in Thailand tr
 
 ### Last Update:
 
-November 13, 2024
+November 15, 2024
 
 ### Release date of the software
 
-November 13, 2024
+November 15, 2024
 
 ### Installation Instructions
 
