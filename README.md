@@ -56,4 +56,5 @@ November 13, 2024
 1. Open a terminal window or command prompt, depending on your operating systems.
 2. Type "cd " (With a space), then drag and drop the unzipped folder into the terminal window and press Enter.
 3. Run the installation script by typing "./install.sh" for MacOS or Linux and pressing Enter.
-For Windows, type ".\window_install.bat" and press Enter to run the installation script.
+   For Windows, type ".\window_install.bat" and press Enter to run the installation script.
+4. You must initialize the account chart first. Type "1" and choose to initialize by "Use Template" or "Upload A Template".
