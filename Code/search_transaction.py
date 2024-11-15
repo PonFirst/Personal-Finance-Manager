@@ -126,8 +126,12 @@ def search_transaction():
                     print("Operation cancelled.")
                     return
                 if valid_date(end_date):
-                    break
-                print("Invalid date format. Please re-enter (YYYY-MM-DD).")
+                    if end_date >= start_date:
+                        break
+                    else:
+                        print("End date must be after start date. Please re-enter.")
+                else:
+                    print("Invalid date format. Please re-enter (YYYY-MM-DD).")
 
             connection = sqlite3.connect("personal_finance.db")
             cursor = connection.cursor()
