@@ -114,7 +114,8 @@ def search_by_date():
         return True
 
     # Check if the date is in the correct format
-    if valid_date(date_str):        
+    import re
+    if re.match(r'^\d{4}-\d{2}-\d{2}$', date_str) and valid_date(date_str):
         conn = sqlite3.connect('personal_finance.db')
         cursor = conn.cursor()
 
