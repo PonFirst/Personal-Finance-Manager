@@ -40,8 +40,8 @@ def search_transaction():
     # Ask the user how they would like to search for the transaction
     while True:
         print("How would you like to search for the transaction?")
-        print("1. Source Bank Number")
-        print("2. Destination Bank Number")
+        print("1. Source account Number")
+        print("2. Destination account Number")
         print("3. Date")
         choice = input("Enter your choice (1, 2, 3 or cancel): ")
 
@@ -51,7 +51,7 @@ def search_transaction():
                 print("Operation cancelled.")
                 return
             if not valid_id(account_id):
-                print("Invalid bank number. Please enter a 4-digit number.")
+                print("Invalid account number. Please enter a 4-digit number.")
                 continue
 
             connection = sqlite3.connect("personal_finance.db")
@@ -82,7 +82,7 @@ def search_transaction():
                 print("Operation cancelled.")
                 return
             if not valid_id(account_id):
-                print("Invalid bank number. Please enter a 4-digit number.")
+                print("Invalid account number. Please enter a 4-digit number.")
                 continue
 
             connection = sqlite3.connect("personal_finance.db")
@@ -96,7 +96,7 @@ def search_transaction():
             connection.close()
 
             if not results:
-                print(f"No transactions found for bank number {account_id}.")
+                print(f"No transactions found for account number {account_id}.")
                 continue
 
             print("Transactions found:")

@@ -76,7 +76,7 @@ def delete_transaction():
 
 # Search transactions by bank account number.
 def search_by_account():
-    account_number = input("Enter the bank id number (4 digits) or type 'cancel' to exit: ")
+    account_number = input("Enter the account id number (4 digits) or type 'cancel' to exit: ")
     if account_number.lower() == 'cancel':
         print("Operation cancelled.")
         return True
@@ -141,7 +141,7 @@ def search_by_date():
 
 # to search transaction by destination account number
 def search_by_destination():
-    account_number = input("Enter the bank id number (4 digits) or type 'cancel' to exit: ")
+    account_number = input("Enter the account id number (4 digits) or type 'cancel' to exit: ")
     if account_number.lower() == 'cancel':
         print("Operation cancelled.")
         return True
