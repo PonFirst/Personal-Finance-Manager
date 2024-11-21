@@ -1,5 +1,8 @@
 Account_ID,Name,Category,Balance
-1001,Account 1,Income,0
-2001,Account 2,Expense,0
-3001,Account 3,Asset,0
-4001,Account 4,Liability,0
+1001,Salary,Income,0
+1002,Allowance,Income,0
+2001,Food,Expense,0
+2002,Entertainment,Expense,0
+2003,Rent,Expense,0
+3001,Savings,Asset,0
+4001,Loan,Liability,0
