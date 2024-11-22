@@ -52,6 +52,10 @@ def type_allow(source_account_type, destination_account_type):
     }
     return destination_account_type in allowed_category.get(source_account_type, [])
 
+# Function to validate description
+def valid_description(description):
+    return any(char.isalpha() for char in description)
+
 #Act as a main function to add a transaction
 def add_transaction():
 
@@ -97,10 +101,15 @@ def add_transaction():
 
         print("Invalid amount. Please enter a positive number.")
 
-    description = input("Enter a description for the transaction or 'C' to cancel: ")
-    if description.upper() == 'C':
-        print("Transaction cancelled.")
-        return
+    while True:     # Loop until a valid description is entered
+        description = input("Enter a description for the transaction or 'C' to cancel: ")
+        if description.upper() == 'C':
+            print("Transaction cancelled.")
+            return
+        if valid_description(description):
+            break
+
+        print("Invalid description. Please enter at least one letter.")
 
     while True:     # Loop until a valid date is entered
         transaction_date = input("Enter transaction date (format: YYYY-MM-DD) or 'C' to cancel: ")
